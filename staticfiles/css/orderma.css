@@ -6,8 +6,10 @@ body{
     align-items: center;
 }
 .Cart-Container {
-    margin: 10%;
-    width: 70%;
+    margin-top: 10%;
+    margin-left: 50px;
+    margin-bottom: 50px;
+    width: 980px;
     min-height: 85%;
     background-color: #ffffff;
     border-radius: 20px;

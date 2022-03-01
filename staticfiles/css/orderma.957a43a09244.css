@@ -1,0 +1,132 @@
+body{
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom right, #E3F0FF, #FAFCFF);
+    height: 100vh;
+    align-items: center;
+}
+.Cart-Container {
+    margin-top: 10%;
+    margin-left: 50px;
+    width: 980px;
+    min-height: 85%;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0px 25px 40px #1687d933;
+    scroll-behavior: auto;
+    padding-bottom: 30px;
+}
+.Header{
+    margin: auto;
+    margin-top: 10px;
+    width: 90%;
+    height: 15%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.Headi{
+    font-size: 20px;
+    font-family: 'Open Sans';
+    font-weight: 700;
+    color: #2F3841;
+    margin-top: 10px;
+}
+.Action{
+    margin-top: 10px;
+    font-size: 14px;
+    font-family: 'Open Sans';
+    font-weight: 600;
+    color: #E44C4C;
+    cursor: pointer;
+    border: none;
+}
+.verall{
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+    font-family: 'Open Sans';
+    font-weight: 600;
+    color: #E44C4C;
+    cursor: pointer;
+    border: none;
+    background: none;
+    border-bottom: 1px solid #E44C4C;
+
+}
+.itemsv{
+    width: 100%;
+    height: 10%;
+    padding: 10px;
+    margin: 5px;
+    background: none; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.lefbtn{
+    background: none;
+    display: flex;
+    justify-content: right;
+}
+/* .item-name{
+    padding: 3px !important;
+    margin-left: 10%;
+    line-height: 5px;
+    font-size: 20px;
+    font-family: 'Open Sans';
+    font-weight: 800;
+    color: #462121;
+    display: inline;
+} */
+.itemn{
+    color: darkturquoise;
+    background: none;
+    padding-top: 8px;
+    font-size: 20px;
+    font-family: 'Open Sans';
+    font-weight: 800;
+}
+.ver{
+    color: #1687d9;
+    font-size: 20px;
+    font-family: 'Open Sans';
+    font-weight: 600;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.blo{
+    color: #ee290f;
+    font-size: 20px;
+    font-family: 'Open Sans';
+    font-weight: 600;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.verify{
+    padding: 3px !important;
+    margin-right: 5%;
+    font-size: 16px;
+    font-family: 'Open Sans';
+    font-weight: 600;
+    color: #1687d9;
+    cursor: pointer;
+    /* float: right;
+    border: none;
+    background:none;
+    display: inline; */
+}
+.block{
+    padding: 3px !important;
+    margin-right: 2%;
+    font-size: 16px;
+    font-family: 'Open Sans';
+    font-weight: 600;
+    color: #ee290f;
+    cursor: pointer;
+    /* float: right;
+    border: none;
+    background:none; */
+}

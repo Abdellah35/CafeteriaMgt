@@ -2,7 +2,9 @@ arabic-reshaper==2.1.3
 asgiref==3.5.0
 colorama==0.4.4
 cssselect2==0.4.1
+dj-database-url==0.5.0
 Django==4.0.2
+django-heroku==0.3.1
 future==0.18.2
 gunicorn==20.1.0
 html5lib==1.1
@@ -20,4 +22,5 @@ tinycss2==1.1.1
 tqdm==4.62.3
 tzdata==2021.5
 webencodings==0.5.1
+whitenoise==6.0.0
 xhtml2pdf @ git+https://github.com/chrisglass/xhtml2pdf.git@b7576e05d19710c7e0783e90cc25a9eeefed0ff7

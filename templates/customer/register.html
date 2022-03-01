@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>signup</title>
+    <link
+      href="{% static 'css/register.css' %}"
+      type="text/css"
+      rel="stylesheet"
+    />    
+    <!-- Site CSS -->
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">    
+  </head>
+  <body>
+    <div class="d1">
+      <div class="d2">
+        <div class="form_wrapper">
+          <div class="form_container">
+            <div class="title_container">
+              <h2>Registration Form</h2>
+            </div>
+            <div class="row clearfix">
+              <div class="">
+                <form action="" method="post">
+                  {% csrf_token %}
+                  <div class="input_field"> <span><i aria-hidden="true" class="fa fa-envelope"></i></span>
+                    <input type="email" name="email" placeholder="Email" required />
+                  </div>
+                  <div class="input_field"> <span><i aria-hidden="true" class="fa fa-lock"></i></span>
+                    <input type="password" name="password1" placeholder="Password" required />
+                  </div>
+                  <div class="input_field"> <span><i aria-hidden="true" class="fa fa-lock"></i></span>
+                    <input type="password" name="password2" placeholder="Re-type Password" required />
+                  </div>
+                  <div class="input_field"> <span><i aria-hidden="true" class="fa fa-envelope"></i></span>
+                    <input type="text" name="phone" placeholder="Phone: (+251)-" required />
+                  </div>
+                  <div class="row clearfix">
+                    <div class="col_half">
+                      <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
+                        <input type="text" name="fname" placeholder="First Name" />
+                      </div>
+                    </div>
+                    <div class="col_half">
+                      <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
+                        <input type="text" name="lname" placeholder="Last Name" required />
+                      </div>
+                    </div>
+                  </div>
+                      <div class="input_field radio_option">
+                        <input type="radio" name="gender" id="rd1" value="male">
+                        <label for="rd1">Male</label>
+                        <input type="radio" name="gender" id="rd2" value="female">
+                        <label for="rd2">Female</label>
+                      </div>
+                      <div class="d-flex justify-content-center">
+                        <span>Location:</span>
+                        <div class="input_field select_option" style=" margin-left: 20% !important;width: 28% !important">
+                          <select name="block">
+                            <option>Block</option>
+                            <option value="B1">1</option>
+                            <option value="B2">2</option>
+                            <option value="B3">3</option>
+                            <option value="B4">4</option>
+                            <option value="B5">5</option>
+                            <option value="B6">6</option>
+                          </select>
+                          <div class="select_arrow"></div>
+                        </div>
+                        <div class="input_field select_option" style=" margin-left: 20% !important; width: 28% !important">
+                          <select name="floor">
+                            <option>Floor</option>
+                            <option value="F1">0</option>
+                            <option value="F1">1</option>
+                            <option value="F2">2</option>
+                            <option value="F3">3</option>
+                            <option value="F4">4</option>
+                            <option value="F5">5</option>
+                            <option value="F6">6</option>
+                          </select>
+                          <div class="select_arrow"></div>
+                        </div>
+                        <div class="input_field select_option" style=" margin-left: 20% !important; width: 28% !important">
+                          <select name="room">
+                            <option>Room</option>
+                            <option value="R1">1-left</option>
+                            <option value="R2">2-right</option>
+                          </select>
+                          <div class="select_arrow"></div>
+                        </div>
+                      </div>
+                    <div class="input_field checkbox_option">
+                        <input type="checkbox" id="cb1">
+                        <label for="cb1">I agree with terms and conditions</label>
+                    </div>
+                  <input class="button" type="submit" value="Register" />
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% comment %} <form action="" method="post">
+          {% csrf_token %}
+          <label class="label_id">First Name:</label>
+          <input type="text" name="fname" class="inp" /> <br />
+          <label class="label_id">Last Name:</label>
+          <input type="text" name="lname" class="inp" /> <br />
+          <label class="label_id">Email:</label>
+          <input type="email" name="email" class="inp" /> <br />
+          <label class="label_id">Phone:</label>
+          <input type="number" name="phone" class="inp" /> <br />
+          <label class="label_id">Address:</label>
+          <select name="address">
+            <option value="B1-F1-R1">B1-F1-R1</option>
+            <option value="B1">B1-F1-R2</option>
+          </select><br />
+          <label class="label_id">Password:</label>
+          <input type="password" name="password1" class="inp" /> <br />
+          <label class="label_id">Confirm:</label>
+          <input type="password" name="password2" class="inp" /> <br />
+          <input type="submit" value="Submit" class="btn" /> <br />
+        </form> {% endcomment %}
+      </div>
+      <div>
+        {% for message in messages %}
+        <h3>{{message}}</h3>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>

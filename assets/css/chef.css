@@ -1,0 +1,38 @@
+body {
+  text-align: justify;
+}
+.heads {
+  color: darkturquoise;
+  margin-left: 10%;
+}
+.orders {
+  text-align: center;
+  min-width: 20%;
+  max-width: 30%;
+  align-items: center;
+  border: 2px solid #000000;
+  border-radius: 3px;
+  margin-left: 10%;
+  margin-top: 50px;
+  padding: 50px;
+  background-color: rgba(72, 155, 4, 0.4);
+}
+.item_name {
+  color: darkturquoise;
+  display: inline;
+  text-align: left;
+  margin-right: 5px;
+  font-size: 15px;
+}
+.items {
+  margin: 5px;
+  width: 80%;
+  text-align: right;
+}
+.btn {
+  margin-top: 5%;
+  background-color: maroon;
+  color: white;
+  font-weight: bold;
+  padding: 2px;
+}

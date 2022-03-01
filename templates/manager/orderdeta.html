@@ -1,0 +1,205 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en"><!-- Basic -->
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">   
+   
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+     <!-- Site Metas -->
+    <title>Order Verication</title>  
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">    
+	<!-- Site CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">    
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'css/orderdet.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'css/ordermg.css' %}"> {% endcomment %}
+    <script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    </script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+	<!-- Start header -->
+	<header class="top-navbar">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container">
+				<a class="navbar-brand" href="index.html">
+					<img src="{% static 'img/logos.png' %}" style="width: 250; height: 100px" alt="" />
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-rs-food" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+				  <span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbars-rs-food">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Order</a>
+							<div class="dropdown-menu" aria-labelledby="dropdown-a">
+								<a class="dropdown-item" href="{% url 'ordermg' %}">Verify Order</a>
+								<a class="dropdown-item active" href="{% url 'orderdet' %}">Order History</a>
+							</div>
+						</li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'menumg' %}">Menu</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'meal' %}">Meal</a></li>
+						<li class="nav-item"><a class="nav-link " href="{% url 'employee' %}">Employee</a></li>
+						<li class="nav-item"><a class="nav-link " href="{% url 'purchases' %}">Purchases</a></li>
+            			<li class="nav-item"><a class="nav-link" href="{% url 'customer' %}">Customer</a></li>
+            			<li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<!-- End header -->
+	<br />
+	<div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-4">
+						<h2 style="color: white !important;">Order <b>Details</b></h2>
+					</div>
+                </div>
+            </div>
+			<div class="table-filter">
+				<form action="" method="post">
+					{% csrf_token %}
+					<div class="row">
+						<div class="col-sm-9">
+							<div class="filter-group">
+								<span>Show</span>
+								<select class="form-control" name="entries">
+									<option value="5">5</option>
+									<option value="10">10</option>
+									<option value="15">20</option>
+									<option value="20">40</option>
+									<option value="20">80</option>
+									<option value="20">100</option>
+									<option value="20">1000</option>
+								</select>
+								<span>entries</span>
+							</div>
+							<div class="filter-group"></div>
+							<div class="filter-group">
+								<label>Status</label>
+								<select class="form-control" id="status" name="stat">
+									<option value="Any">Any</option>
+									<option value="Pendint">Pending</option>
+									<option value="Verified">Verified</option>
+									<option value="Blocked">Blocked</option>
+									<option value="Delivered">Delivered</option>
+								</select>
+							</div>
+							<span class="filter-icon"><i class="fa fa-filter"></i></span>
+						</div>
+						<button type="submit" class="text-center" style=" cursor: pointer; background: none; width: 40px; margin-left: 40px; color:white; font-weignt: bold; border: none; padding:5px !important;"><span class="filter-icon lg"><i style="color: green; font-size: 35px" class="fa fa-refresh"></i></span></button>
+					</div>
+				</form>
+			</div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Customer</th>
+						<th>Location</th>
+						<th>Order Date</th>						
+                        <th>Status</th>						
+						<th>Net Amount</th>
+						<th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{order.id}}</td>
+                        <td><a href="#">{{order.customer.first_name}} {{order.customer.last_name}}</a></td>
+						<td>{{order.address}}</td>
+                        <td>{{order.date_created}}</td>    
+						{% if order.is_blocked %}
+						<td><span class="status text-blocked">&bull;</span> {{order.status}}</td>
+						{% else %}                    
+						<td><span class="status text-success">&bull;</span> {{order.status}}</td>
+						{% endif %}
+						<td>Br {{order.price}}</td>
+						<td>{{order.customer}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div> 
+
+	<!-- Start Footer -->
+		<!-- Start Footer -->
+		<footer class="footer-area bg-f">
+			<div class="container" id="about">
+				<div class="row">
+					<div class="col-lg-3 col-md-8">
+						<h3>About Us</h3>
+						<p>Oromia Bureaus' Cafeteria is a non-profit organization established by the Oromia government to serve its customers.</p>
+					</div>
+					<div class="col-lg-3 col-md-8">
+						<h3>Contact information</h3>
+						<p class="lead">Jimma University, Jimma, Ethiopia</p>
+						<p class="lead"><a href="#">+251 115-65-65</a></p>
+						<p><a href="#">obcafe22@gmail.com</a></p>
+					</div>
+					<div class="col-lg-3 col-md-8">
+						<h3>Opening hours</h3>
+						<p><span class="text-color">Mon-Fri: </span> 8:Am - 5PM</p>
+						<p><span class="text-color">Sat-Sun: </span>Closed</p>
+					</div>
+					<div class="col-lg-3 col-md-8">
+						<h3>Developed By</h3>
+						<p class="lead">Abdellah Kamil</p>
+						<p class="lead">Harun Abdulkadir</p>
+						<p class="lead">Abdela Sabir</p>
+						<p class="lead">Fuad Ali</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="copyright">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12">
+							<p class="company-name">All Rights Reserved. &copy; 2022 <a href="#">Oromia Bureaus' Cafeteria</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</footer>
+	<!-- End Footer -->
+	
+	<a href="#" id="back-to-top" title="Back to top" style="display: none;"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></a>
+
+	<!-- ALL JS FILES -->
+	<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- ALL PLUGINS -->
+	<script src="{% static 'js/jquery.superslides.min.j' %}s"></script>
+	<script src="{% static 'js/images-loded.min.js' %}"></script>
+	<script src="{% static 'js/isotope.min.js' %}"></script>
+	<script src="{% static 'js/baguetteBox.min.js' %}"></script>
+	<script src="{% static 'js/form-validator.min.js' %}"></script>
+    <script src="{% static 'js/contact-form-script.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>

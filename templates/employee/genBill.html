@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en"><!-- Basic -->
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">   
+   
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+     <!-- Site Metas -->
+    <title>Generating Bill</title>  
+    <link rel="stylesheet" href="{% static 'css/bill.css' %}" type="text/css" >
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %} "> 
+</head>
+<body>
+    <div class="receipt-content">
+        <div class="container bootstrap snippets bootdey">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="invoice-wrapper">
+                        <div class="intro">
+                          <strong>Oromia Bureaus' Cafeteria Service</strong>
+                        </div>
+
+                        <div class="payment-info">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <span>Payment No.</span>
+                                    <p>{{No}}</p>
+                                </div>
+                                <div class="col-sm-7 text-right">
+                                    <span>Payment Date</span>
+                                    <p>{{date}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="payment-details">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <strong>
+                                        To: {{name}}
+                                    </strong>
+                                    <p>
+                                    {{adr}}, 
+                                        <a href="#">
+                                            {{email}}
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="line-items">
+                            <div class="headers clearfix">
+                                <div class="row">
+                                    <div class="col-sm-4 ">Description</div>
+                                    <div class="col-sm-3">Quantity</div>
+                                    <div class="col-sm-5 text-right">Amount</div>
+                                </div>
+                            </div>
+                            <div class="items">
+                                {% for key, value in order.items %}
+                                <div class="row item">
+                                    
+                                    <div class="col-sm-4 desc">
+                                        {{key}}
+                                    </div>
+                                    {% for quan,price in value.items %}
+                                    <div class="col-sm-3 qty">
+                                        {{quan}}
+                                    </div>
+                                    <div class="col-sm-5 amount text-right">
+                                        {{price}} Br
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="total text-right">
+                                <div class="field">
+                                    Subtotal <span>{{subtot}} Br</span>
+                                </div>
+                                <div class="field">
+                                    Delivery <span>{{del}} Br</span>
+                                </div>
+                                <div class="field">
+                                    Tax <span>2.00%</span>
+                                </div>
+                                <div class="field grand-total">
+                                    Total <span>{{total}} Br</span>
+                                </div>
+                            </div>
+
+                            <div class="print">
+                                <form action="genbill" method="post">
+                                    {% csrf_token %}
+                                    <a href="#">
+                                        <i class="fa fa-print"></i>
+                                        <input type="hidden" name="idd" value={{idd}} />
+                                        <input type="submit" value="Print receipt" />
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</body>

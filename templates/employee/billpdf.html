@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body >
+    <div style="width: 300px;">
+        <h3 style="width: 300px; text-align: center; margin-top: 40px;">Oromia Bureaus' Cafeteria</h3>
+        <h3 style="width: 300px; text-align: center; margin-bottom: 40px;">Service</h3>
+        <h4 style="width: 300px; margin-left: 20px; text-align:left;">Payment No.</h4>
+        <p style="margin-left: 20px; text-align:left;">{{No}}</p>
+        <h5 style="margin-left: 40px; text-align:right;">Payment Date</h5>
+        <p style="margin-left: 40px; text-align:right;">{{date}}</p><br />
+        <hr style="margin-left: 30px; color: blue;"/>
+        <h4 style="text-align: left; margin-left: 20px;">To: {{name}}</h4>
+        <h5 style="text-align: left; margin-left: 40px;">{{adr}}, {{email}}</h5>
+        <table style="width: 300px">
+            <tr>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Price/q</th>
+            </tr>
+            <hr />
+            {% for key, value in order.items %}
+            <tr>
+                <th>{{key}}</th>
+                {% for quan,price in value.items %}
+                <th>{{quan}}</th>
+                <th>{{price}}</th>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        <hr style="color: rgb(86, 120, 136);"/>
+        <h4 style="margin-left: 40px; text-align:right;">Subtotal: {{subtot}} Br</h4>
+        <h4 style="margin-left: 40px; text-align:right;">Delivery:   {{del}} Br</h4>
+        <h4 style="margin-left: 40px; text-align:right;">Tax:        2.0%</h4>
+        <h4 style="margin-left: 40px; text-align:right;"><b>Total:    <u>{{total}} Br</u></b></h4>
+    </div>
+    <h4 style="margin-left: 40px; text-align:center;">Thank you for using our service.</h4>
+</body>
+</html>

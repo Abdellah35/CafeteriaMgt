@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en"><!-- Basic -->
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">   
+   
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+     <!-- Site Metas -->
+    <title>Generating Bill</title>  
+    <style type="text/css">
+          body{
+            width: 100%;
+            height: 100%;
+            background-color: #708DC0;
+            align-items: center;
+          }
+          .receipt-content .logo a:hover {
+              text-decoration: none;
+              color: #7793C4; 
+            }
+            
+            .receipt-content .invoice-wrapper {
+              width: 400px;
+              background: #FFF;
+              border: 1px solid #CDD3E2;
+              box-shadow: 0px 0px 1px #CCC;
+              padding: 40px 40px 60px;
+              margin-top: 40px;
+              border-radius: 4px; 
+            }
+            
+            .receipt-content .invoice-wrapper .payment-details span {
+              color: #A9B0BB;
+              display: block; 
+            }
+            .receipt-content .invoice-wrapper .payment-details a {
+              display: inline-block;
+              margin-top: 5px; 
+            }
+            
+            .receipt-content .invoice-wrapper .line-items .print a {
+              display: inline-block;
+              border: 1px solid #9CB5D6;
+              padding: 13px 13px;
+              border-radius: 5px;
+              color: #708DC0;
+              font-size: 13px;
+              -webkit-transition: all 0.2s linear;
+              -moz-transition: all 0.2s linear;
+              -ms-transition: all 0.2s linear;
+              -o-transition: all 0.2s linear;
+              transition: all 0.2s linear; 
+            }
+            
+            .receipt-content .invoice-wrapper .line-items .print a:hover {
+              text-decoration: none;
+              border-color: #333;
+              color: #333; 
+            }
+            
+            .receipt-content {
+              z-index: 11;
+              background: #ECEEF4; 
+            }
+            @media (min-width: 1200px) {
+              .receipt-content .container {width: 900px; } 
+            }
+            
+            .receipt-content .logo {
+              text-align: center;
+              margin-top: 50px; 
+            }
+            
+            .receipt-content .logo a {
+              font-family: Myriad Pro, Lato, Helvetica Neue, Arial;
+              font-size: 36px;
+              letter-spacing: .1px;
+              color: #555;
+              font-weight: 300;
+              -webkit-transition: all 0.2s linear;
+              -moz-transition: all 0.2s linear;
+              -ms-transition: all 0.2s linear;
+              -o-transition: all 0.2s linear;
+              transition: all 0.2s linear; 
+            }
+            
+            .receipt-content .invoice-wrapper .intro {
+              line-height: 25px;
+              color: #444; 
+            }
+            
+            .receipt-content .invoice-wrapper .payment-info {
+              margin-top: 5px;
+              padding-top: 5px; 
+            }
+            
+            .receipt-content .invoice-wrapper .payment-info span {
+              color: #A9B0BB; 
+            }
+            
+            .receipt-content .invoice-wrapper .payment-info strong {
+              display: block;
+              color: #444;
+              margin-top: 3px; 
+            }
+            
+            @media (max-width: 767px) {
+              .receipt-content .invoice-wrapper .payment-info .text-right {
+              text-align: left;
+              margin-top: 20px; } 
+            }
+            .receipt-content .invoice-wrapper .payment-details {
+              border-top: 2px solid #EBECEE;
+              margin-top: 5px;
+              padding-top: 5px;
+              line-height: 22px; 
+            }
+            @media (max-width: 767px) {
+              .receipt-content .invoice-wrapper .payment-info .text-center {
+              text-align:center;
+              margin-top: 20px; } 
+            }
+            
+            @media (max-width: 767px) {
+              .receipt-content .invoice-wrapper .payment-details .text-right {
+              text-align: left;
+              margin-top: 5px; } 
+            }
+            @media (max-width: 767px) {
+              .receipt-content .invoice-wrapper .payment-details .text-center {
+              text-align: center;
+              margin-top: 5px; } 
+            }
+            .receipt-content .invoice-wrapper .line-items {
+              margin-top: 5px; 
+            }
+            .receipt-content .invoice-wrapper .line-items .headers {
+              color: #A9B0BB;
+              font-size: 13px;
+              letter-spacing: .3px;
+              border-bottom: 2px solid #EBECEE;
+              padding-bottom: 4px; 
+            }
+            .receipt-content .invoice-wrapper .line-items .items {
+              margin-top: 8px;
+              border-bottom: 2px solid #EBECEE;
+              padding-bottom: 8px; 
+            }
+            .receipt-content .invoice-wrapper .line-items .items .item {
+              padding: 10px 0;
+              color: #696969;
+              font-size: 15px; 
+            }
+            @media (max-width: 767px) {
+              .receipt-content .invoice-wrapper .line-items .items .item {
+              font-size: 13px; } 
+            }
+            .receipt-content .invoice-wrapper .line-items .items .item .amount {
+              letter-spacing: 0.1px;
+              color: #84868A;
+              font-size: 16px;
+             }
+            @media (max-width: 767px) {
+              .receipt-content .invoice-wrapper .line-items .items .item .amount {
+              font-size: 13px; } 
+            }
+            
+            .receipt-content .invoice-wrapper .line-items .total {
+              margin-top: 30px; 
+            }
+            
+            .receipt-content .invoice-wrapper .line-items .total .extra-notes {
+              float: left;
+              width: 40%;
+              text-align: left;
+              font-size: 13px;
+              color: #7A7A7A;
+              line-height: 20px; 
+            }
+            
+            @media (max-width: 767px) {
+              .receipt-content .invoice-wrapper .line-items .total .extra-notes {
+              width: 100%;
+              margin-bottom: 30px;
+              float: none; } 
+            }
+            
+            .receipt-content .invoice-wrapper .line-items .total .extra-notes strong {
+              display: block;
+              margin-bottom: 5px;
+              color: #454545; 
+            }
+            
+            .receipt-content .invoice-wrapper .line-items .total .field {
+              margin-bottom: 7px;
+              font-size: 14px;
+              color: #555; 
+            }
+            
+            .receipt-content .invoice-wrapper .line-items .total .field.grand-total {
+              margin-top: 10px;
+              font-size: 16px;
+              font-weight: 500; 
+            }
+            
+            .receipt-content .invoice-wrapper .line-items .total .field.grand-total span {
+              color: #20A720;
+              font-size: 16px; 
+            }
+            
+            .receipt-content .invoice-wrapper .line-items .total .field span {
+              display: inline-block;
+              margin-left: 20px;
+              min-width: 85px;
+              color: #84868A;
+              font-size: 15px; 
+            }
+            
+            .receipt-content .invoice-wrapper .line-items .print {
+              margin-top: 50px;
+              text-align: center; 
+            }
+            
+            
+            
+            .receipt-content .invoice-wrapper .line-items .print a i {
+              margin-right: 3px;
+              font-size: 14px; 
+            }
+            
+            .receipt-content .footer {
+              margin-top: 40px;
+              margin-bottom: 110px;
+              text-align: center;
+              font-size: 12px;
+              color: #969CAD; 
+            }    
+            .row{display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-15px;margin-left:-15px}
+            .col,.col-1,.col-10,.col-11,.col-12,.col-2,.col-3,.col-4,.col-5,.col-6,.col-7,.col-8,.col-9,.col-auto,.col-lg,.col-lg-1,.col-lg-10,.col-lg-11,.col-lg-12,.col-lg-2,.col-lg-3,.col-lg-4,.col-lg-5,.col-lg-6,.col-lg-7,.col-lg-8,.col-lg-9,.col-lg-auto,.col-md,.col-md-1,.col-md-10,.col-md-11,.col-md-12,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-md-auto,.col-sm,.col-sm-1,.col-sm-10,.col-sm-11,.col-sm-12,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9,.col-sm-auto,.col-xl,.col-xl-1,.col-xl-10,.col-xl-11,.col-xl-12,.col-xl-2,.col-xl-3,.col-xl-4,.col-xl-5,.col-xl-6,.col-xl-7,.col-xl-8,.col-xl-9,.col-xl-auto{position:relative;width:100%;min-height:1px;padding-right:15px;padding-left:15px}
+            .text-right{text-align:right!important}
+    </style>
+</head>
+<body>
+  <div class="receipt-content" style="width:300px; height: fit-content; background:none; align-items: center;">
+    <div class="container bootstrap snippets bootdey"  style="width:300px; height:fit-content;background: none;">
+      <div class="row"  style="width:400px; height: fit-content; background:none;">
+        <div class="col-md-12">
+          <div class="invoice-wrapper" style=" max-width:300px !important; height: fit-content;">
+            <div class="intro" style="text-align: center;" >
+                <strong>Oromia Bureaus' Cafeteria</strong>
+            </div>
+            <div class="intro" style="margin-bottom: 40px; text-align: center;">
+              <strong>Service</strong>
+            </div>
+
+            <div class="payment-info">
+                <div class="row" style="display:flex; justify-content: space-between; width:100%;">
+                    <div style="display:inline">
+                        <span>Payment No.</span>
+                        <p>{{No}}</p>
+                    </div>
+                    <div style="display:inline">
+                        <span>Payment Date</span>
+                        <p>{{date}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="payment-details">
+                <div class="row">
+                    <div class="col-sm">
+                        <strong>
+                            To: J{{name}}
+                        </strong>
+                        <p>
+                        {{adr}}, 
+                            <a href="#">
+                                {{email}}
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="line-items">
+                <div class="headers clearfix" style="display:flex; justify-content: space-between;">
+                    <div style="display:flex; justify-content: space-between; width:100%;">
+                        <div  style="display: inline;">Description</div>
+                        <div  style="display: inline;">Quantity</div>
+                        <div  style="display: inline;">Amount</div>
+                    </div>
+                </div>
+                <div class="items" >
+                  {% for key, value in order.items %}
+                    <div style="display:flex; justify-content: space-between; width:100%;">
+                        
+                        <div style="display: inline;">
+                            {{key}}
+                        </div>
+                        {% for quan,price in value.items %}
+                        <div style="display: inline;">
+                            {{quan}}
+                        </div>
+                        <div style="display: inline;">
+                            {{price}} Br
+                        </div>
+                        {% endfor %}
+                    </div>
+                  {% endfor %}
+                    
+                </div>
+                <div class="total text-right">
+                    <div class="field">
+                        Subtotal <span>{{subtot}} Br</span>
+                    </div>
+                    <div class="field">
+                        Delivery <span>{{del}} Br</span>
+                    </div>
+                    <div class="field">
+                        Tax <span>2.00%</span>
+                    </div>
+                    <div class="field grand-total">
+                        Total <span>{{total}} Br</span>
+                    </div>
+                </div>
+            </div>
+            <h5>Thank you for using our service </h5>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </div>
+</body>
+</html>

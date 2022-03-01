@@ -1,0 +1,30 @@
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name="home"),
+    path('menu/', views.menu, name='menu'),
+    path('addcart', views.addcart, name='addcart'),
+    path('myorder/', views.myorder, name="myorder"),
+    path('myorder/order',views.order, name="order"),
+    path('myorder/remcart',views.remcart, name="remcart"),
+    path('remallcart',views.remallcart,name="remallcart"),
+    path('feedback',views.feedback,name="comment"),
+    path('manager/menumg', views.menumg, name="menumg"),
+    path('manager/meal', views.mealmg, name="meal"),
+    path('manager/ordermg', views.ordermg, name="ordermg"),
+    path('manager/orderdet', views.orderdet, name="orderdet"),
+    path('manager/remorder', views.remorder, name="remorder"),
+    path('manager/verall', views.verall, name="verall"),
+    path('manager/report', views.reportmg, name="report"),
+    path('manager/employee', views.employeemg, name="employee"),
+    path('manager/purchases',views.purchases, name="purchases"),
+    path('manager/customer',views.customer, name="customer"),
+    path('manager/', views.ordermg, name="manager"),
+    path('chef/', views.chef, name="chef"),
+    path('waiter/', views.waiter, name="waiter"),
+    path('casher/', views.casher, name="casher"),
+    path('home/myorder',views.myorder, name="myorder"),
+    path('casher/genbill', views.GeneratePdf,name="genbill"),
+    path('supplier/',views.supplier, name="supplier"),
+] 

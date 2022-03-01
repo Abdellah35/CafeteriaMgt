@@ -36,7 +36,7 @@ def register(request):
                     customer=user, address=address, phone=phone, gender=gender)
                 customer.save()
                 subject = "Welcome to OBCafe"
-                message="Hello {} {}, \nWelcome To your cafeteria.\n now you can place order, if you need also we have delivery service.\n\nVisite: www.obcafeteria.herokuapp.com, to access our menu.".format((fname, lname))
+                message="Hello "+ fname + " " + lname + "\nWelcome To your cafeteria.\n now you can place order, if you need also we have delivery service.\n\nVisite: www.obcafeteria.herokuapp.com, to access our menu."
                 send_mail(subject, message,'obcafe22@gmail.com', [email],fail_silently=True)
                 return redirect('login')
                 

@@ -37,8 +37,9 @@ def register(request):
                     customer=user, address=address, phone=phone, gender=gender)
                 customer.save()
                 subject = "Welcome to OBCafe"
-                message="Hello "+ fname + " " + lname + "\nWelcome To your cafeteria.\n now you can place order, if you need also we have delivery service.\n\nVisite: www.obcafeteria.herokuapp.com, to access our menu."
-                send_mail(subject, message,settings.EMAIL_HOST_USER, [email],fail_silently=True)
+                message="Hello "+ fname + " " + lname + "\nWelcome To your cafeteria.\n now you can place order, if you need also we have delivery service.\n\nVisit: https://obcafeteria.herokuapp.com, to access our menu."
+
+                send_mail(subject, message +"\n\n Abdellah Kmail (project manager)",settings.EMAIL_HOST_USER, [email],fail_silently=True)
                 return redirect('login')
                 
         else:
@@ -99,7 +100,7 @@ def forgotp(request):
             user = User.objects.get(email=email)
             if user:
                 user.password = OTP
-                message =  "Use this password to login to your account.\n" + OTP
+                message =  "Use this password to login to your account.\n \t" + OTP
                 send_mail('Reset Password',message,settings.EMAIL_HOST_USER,[email],fail_silently=True,)
                 user.save()
             return redirect('/')

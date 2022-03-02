@@ -51,7 +51,7 @@ def GeneratePdf(request):
         #Send receipt email for the customer
         message= "Item: {}\nNumber of items: {}\nTotal: {} Birr.\n\n\tThank you for using our service.\n\nvisite: www.obcafeteria.herokuapp.com".format(etem,num,total)
         print(message)
-        send_mail('Receipt',message,settings.EMAIL_HOST_USER,[email],fail_silently=True,)
+        send_mail('Invoice receipt',message,settings.EMAIL_HOST_USER,[email],fail_silently=True,)
          # rendering the template
         return HttpResponse(pdf, content_type='application/pdf')
 

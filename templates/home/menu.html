@@ -15,8 +15,7 @@
     <meta name="author" content="">
 
     <!-- Site Icons -->
-    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
-    <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'img/icons/obc.jpg' %}"/>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">    
@@ -141,14 +140,20 @@
 			
 			<div class="row inner-menu-box">
 				<div class="col-3">
+					
 					<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 						<a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">All</a>
 						<a class="nav-link" id="v-pills-breakfast-tab" data-toggle="pill" href="#v-pills-breakfast" role="tab" aria-controls="v-pills-breakfast" aria-selected="false">Breakfast</a>
 						<a class="nav-link" id="v-pills-lunch-tab" data-toggle="pill" href="#v-pills-lunch" role="tab" aria-controls="v-pills-lunch" aria-selected="false">Lunch</a>
 						<a class="nav-link" id="v-pills-softdr-tab" data-toggle="pill" href="#v-pills-softdr" role="tab" aria-controls="v-pills-softdr" aria-selected="false">Soft Drink</a>
 						<a class="nav-link" id="v-pills-hotdr-tab" data-toggle="pill" href="#v-pills-hotdr" role="tab" aria-controls="v-pills-hotdr" aria-selected="false">Hot Drinks</a>
+						<form action="{% url 'myorder' %}" method="post">
+							{% csrf_token %}
+							<div class="text-left" style="margin-top: 20px"><button class="btn btn-danger rounded-3 nav-link" type="submit" >My Cart</button></div>
+						</form>
 					</div>
-					<div class="nav flex-column nav-pills">
+					
+					{% comment %} <div class="nav flex-column nav-pills">
 						
 						<div class=" d-flex justify-content-between flex-column col-sm-6 col-md-6 col-xl mb-5 h-100  special-grid border border-success mt-3 rounded-3" >
 							
@@ -164,7 +169,7 @@
 							</form>
 						</div>
 						
-					</div>
+					</div> {% endcomment %}
 				</div>
 				
 				<div class="col-9">

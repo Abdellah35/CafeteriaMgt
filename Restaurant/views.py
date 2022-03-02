@@ -8,6 +8,7 @@ from django.views.generic import View
 from .process import html_to_pdf 
 from django.template.loader import render_to_string
 from django.core.mail import BadHeaderError, send_mail
+from django.conf import settings
 
 
 def GeneratePdf(request):
@@ -50,7 +51,7 @@ def GeneratePdf(request):
         #Send receipt email for the customer
         message= "Item: {}\nNumber of items: {}\nTotal: {} Birr.\n\n\tThank you for using our service.\n\nvisite: www.obcafeteria.herokuapp.com".format(etem,num,total)
         print(message)
-        send_mail('Receipt',message,'obcafe22@gmail.com',[email],fail_silently=True,)
+        send_mail('Receipt',message,settings.EMAIL_HOST_USER,[email],fail_silently=True,)
          # rendering the template
         return HttpResponse(pdf, content_type='application/pdf')
 
@@ -184,7 +185,7 @@ def feedback(request):
         name = request.POST.get('name', '')
         email = request.POST.get('email','')
         if email != '':
-            send_mail("customer comment", comments,email, ['obcafe22@gmail.com'],fail_silently=True)
+            send_mail("customer comment", comments,email, [settings.EMAIL_HOST_USER],fail_silently=True)
         return redirect('home')
     else:
         return render(request, 'customer/feedback.html')

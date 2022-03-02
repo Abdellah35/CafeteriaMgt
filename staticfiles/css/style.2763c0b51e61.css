@@ -8,10 +8,10 @@
     IMPORT FILES
 -------------------------------------------------------------------*/
 
-@import url(animate.css);
-@import url(font-awesome.min.css);
-@import url(superslides.css);
-@import url(baguetteBox.min.css);
+@import url("animate.4b7615f268d3.css");
+@import url("font-awesome.min.5339709e9c0e.css");
+@import url("superslides.2f30256ddb6b.css");
+@import url("baguetteBox.min.75c429ce0b33.css");
 
 /*------------------------------------------------------------------
     SKELETON
@@ -319,7 +319,7 @@ button:focus{
 
 .about-section-box{
 	padding: 70px 0px;
-	background: #ffffff url(../img/about-bg.jpg) no-repeat bottom center;
+	background: #ffffff url("../img/about-bg.2edcce18ec17.jpg") no-repeat bottom center;
 	background-size: cover;
 }
 .about-section-box .img-fluid{
@@ -358,7 +358,7 @@ button:focus{
 
 
 .qt-background{
-	background: url(../img/qt-bg.jpg) no-repeat;
+	background: url("../img/qt-bg.d743fef5c307.jpg") no-repeat;
 	background-size: cover;
 	padding: 100px 0;
 	background-attachment: fixed;
@@ -620,7 +620,7 @@ button:focus{
 	padding-bottom: 0px;
 }
 .bg-f{
-	background-image: url("../img/footer-bg.jpg");
+	background-image: url("../img/footer-bg.dec58b91c50d.jpg");
 	background-attachment: scroll;
 	background-clip: initial;
 	background-color: rgba(0, 0, 0, 0);
@@ -775,7 +775,7 @@ button:focus{
 
 .page-breadcrumb {
     padding: 250px 0 150px;
-    background: url(../img/all-bg.jpg) no-repeat;
+    background: url("../img/all-bg.db8f2c7f2786.jpg") no-repeat;
     background-attachment: fixed;
     background-size: cover;
     background-position: 0 0;

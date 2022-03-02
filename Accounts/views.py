@@ -5,6 +5,7 @@ from .models import *
 import random
 from django.contrib.auth import logout
 from django.core.mail import BadHeaderError, send_mail
+from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
 
@@ -37,7 +38,7 @@ def register(request):
                 customer.save()
                 subject = "Welcome to OBCafe"
                 message="Hello "+ fname + " " + lname + "\nWelcome To your cafeteria.\n now you can place order, if you need also we have delivery service.\n\nVisite: www.obcafeteria.herokuapp.com, to access our menu."
-                send_mail(subject, message,'obcafe22@gmail.com', [email],fail_silently=True)
+                send_mail(subject, message,settings.EMAIL_HOST_USER, [email],fail_silently=True)
                 return redirect('login')
                 
         else:
@@ -99,7 +100,7 @@ def forgotp(request):
             if user:
                 user.password = OTP
                 message =  "Use this password to login to your account.\n" + OTP
-                send_mail('Reset Password',message,'obcafe22@gmail.com',[email],fail_silently=True,)
+                send_mail('Reset Password',message,settings.EMAIL_HOST_USER,[email],fail_silently=True,)
                 user.save()
             return redirect('/')
     return render(request, "home/forgotp.html")
@@ -112,7 +113,7 @@ def comment(request):
         from_email = request.POST.get('from_email', '')
         if subject and message and from_email:
             try:
-                send_mail(subject, message, from_email, ['obcafe22@gmail.com'])
+                send_mail(subject, message, from_email, [settings.EMAIL_HOST_USER])
 
             except BadHeaderError:
                 return HttpResponse('<h1 style="color:red">Invalid header found.</h1>')

@@ -39,9 +39,6 @@
 	<header class="top-navbar">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<div class="container">
-				<a class="navbar-brand" href="{% url 'home' %}">
-					<h3 style="color: #a00202;">Oromia Bureaus' Cafe</h3>
-				</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-rs-food" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
 				  <span class="navbar-toggler-icon"></span>
 				</button>
@@ -99,22 +96,22 @@
 						<a class="nav-link" id="v-pills-softdr-tab" data-toggle="pill" href="#v-pills-softdr" role="tab" aria-controls="v-pills-softdr" aria-selected="false">Soft Drink</a>
 						<a class="nav-link" id="v-pills-hotdr-tab" data-toggle="pill" href="#v-pills-hotdr" role="tab" aria-controls="v-pills-hotdr" aria-selected="false">Hot Drinks</a>
 					</div>
-					<div >
-						<div class="row" >
-							<div class=" d-flex justify-content-between flex-column col-sm-6 col-md-6 col-xl mb-5 h-100  special-grid border border-success mt-3 rounded-3" style="min-height: 200px !important; max-width: 200px !important; min-width: 200px !important;">
-								
-								<div class="card-body ps-0 text-center">
-									<h3 class="fw-bold text-1000 text-truncate mb-1" style="color: grey">My Basket</h3>
-									{% for cart in carts %}
-									<h5 class="fw-bold text-1000 text-truncate mb-1">- {{cart}}</h5>
-									{% endfor %}
-								</div>
-								<form action="{% url 'myorder' %}" method="post">
-									{% csrf_token %}
-									<div class="d-grid gap-2" style="padding: 10px"><button class="btn btn-lg btn-danger rounded-3" type="submit" >Order</button></div>
-						  		</form>
+					<div class="nav flex-column nav-pills">
+						
+						<div class=" d-flex justify-content-between flex-column col-sm-6 col-md-6 col-xl mb-5 h-100  special-grid border border-success mt-3 rounded-3" >
+							
+							<div class="card-body ps-0 text-center">
+								<h3 class="fw-bold text-1000 text-truncate mb-1 nav-link" style="color: grey">My Basket</h3>
+								{% for cart in carts %}
+								<h5 class="fw-bold text-1000 text-truncate mb-1">- {{cart}}</h5>
+								{% endfor %}
 							</div>
+							<form action="{% url 'myorder' %}" method="post">
+								{% csrf_token %}
+								<div class="text-center" style="padding: 10px"><button class="btn btn-danger rounded-3 nav-link" type="submit" style="display:relative !important;" >Order</button></div>
+							</form>
 						</div>
+						
 					</div>
 				</div>
 				

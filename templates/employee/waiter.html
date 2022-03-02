@@ -32,14 +32,66 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+      .autohide{
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1030;
+      }
+      .scrolled-down{
+        transform:translateY(-100%); transition: all 0.3s ease-in-out;
+      }
+      .scrolled-up{
+        transform:translateY(0); transition: all 0.3s ease-in-out;
+      }
+    
+    </style>
+    <script type="text/javascript">
+      document.addEventListener("DOMContentLoaded", function(){
+        
+        el_autohide = document.querySelector('.autohide');
+        
+        // add padding-top to bady (if necessary)
+        navbar_height = document.querySelector('.top-navbar').offsetHeight;
+        document.body.style.paddingTop = navbar_height + 'px';
+    
+        if(el_autohide){
+          
+          var last_scroll_top = 0;
+          window.addEventListener('scroll', function() {
+               let scroll_top = window.scrollY;
+             if(scroll_top < last_scroll_top) {
+              el_autohide.classList.remove('scrolled-down');
+              el_autohide.classList.add('scrolled-up');
+            }
+            else {
+              el_autohide.classList.remove('scrolled-up');
+              el_autohide.classList.add('scrolled-down');
+            }
+            last_scroll_top = scroll_top;
+    
+          }); 
+          // window.addEventListener
+    
+        }
+        // if
+        
+      }); 
+      // DOMContentLoaded  end
+    
+    
+    </script>
 
 </head>
 
 <body>
 	<!-- Start header -->
 	<!-- Start header -->
-	<header class="top-navbar">
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<header class="autohide top-navbar navbar">
+		<nav class="autohide navbar navbar-expand-lg navbar-light bg-light">
 			<div class="container">
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-rs-food" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
 				  <span class="navbar-toggler-icon"></span>

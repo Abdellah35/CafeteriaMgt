@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #SECRET_KEY = 'django-insecure-)vzw2fxu+)34+efl0^vl0^avdt#zxo5d3ub8oaa*igz#-!#(h='
 SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
 
 ALLOWED_HOSTS = ['obcafeteria.herokuapp.com']
 

@@ -182,7 +182,7 @@ def feedback(request):
     if request.method == "POST":
         
         subject = "Customer comment"
-        message = request.POST.get('message', '')
+        message = request.POST.get('comments', '')
         from_email = request.POST.get('email', '')
         exper = request.POST.get('experience','')
         name = request.POST.get("name",'')

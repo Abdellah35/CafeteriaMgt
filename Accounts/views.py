@@ -111,10 +111,14 @@ def comment(request):
         
         subject = "Customer comment"
         message = request.POST.get('message', '')
-        from_email = request.POST.get('from_email', '')
+        from_email = request.POST.get('email', '')
+        exper = request.POST.get('experience','')
+        name = request.POST.get("name",'')
+
+        body = "Name: "+name + "\nExperience: " + exper+ "\n" + message
         if subject and message and from_email:
             try:
-                send_mail(subject, message, from_email, [settings.EMAIL_HOST_USER])
+                send_mail(subject, body, from_email, [settings.EMAIL_HOST_USER])
 
             except BadHeaderError:
                 return HttpResponse('<h1 style="color:red">Invalid header found.</h1>')

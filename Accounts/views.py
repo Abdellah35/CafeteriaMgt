@@ -115,7 +115,7 @@ def comment(request):
         exper = request.POST.get('experience','')
         name = request.POST.get("name",'')
 
-        body = "Name: "+name + "\nExperience: " + exper+ "\n" + message
+        body = "Name: "+name + "\nExperience: "+ exper+ "\n" + message
         if subject and message and from_email:
             try:
                 send_mail(subject, body, from_email, [settings.EMAIL_HOST_USER])

@@ -180,15 +180,27 @@ def myorder(request):
 
 def feedback(request):
     if request.method == "POST":
-        experience = request.POST.get('experience','good')
-        comments = request.POST.get('comments','')
-        name = request.POST.get('name', '')
-        email = request.POST.get('email','')
-        if email != '':
-            send_mail("customer comment", comments,email, [settings.EMAIL_HOST_USER],fail_silently=True)
-        return redirect('home')
+        
+        subject = "Customer comment"
+        message = request.POST.get('message', '')
+        from_email = request.POST.get('email', '')
+        exper = request.POST.get('experience','')
+        name = request.POST.get("name",'')
+
+        body = "Name: "+name + "\nExperience: "+ exper+ "\n" + message
+        if subject and message and from_email:
+            try:
+                send_mail(subject, body, from_email, [settings.EMAIL_HOST_USER])
+
+            except BadHeaderError:
+                return HttpResponse('<h1 style="color:red">Invalid header found.</h1>')
+
+            return redirect('/')
+        else:
+            
+            return HttpResponse('<h1 style="color:red" >Make sure all fields are entered and valid.</h1>')
     else:
-        return render(request, 'customer/feedback.html')
+        return render(request,"customer/feedback.html")
 
 #Manager manages the menu (adding and removing menu)
 @login_required(login_url='/accounts/login/')

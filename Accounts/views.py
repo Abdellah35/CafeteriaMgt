@@ -99,7 +99,7 @@ def forgotp(request):
             OTP = str(random.randint(0,9)) + str(random.randint(0,9)) + str(random.randint(0,9)) +str(random.randint(0,9))+str(random.randint(0,9))+str(random.randint(0,9))
             user = User.objects.get(email=email)
             if user:
-                user.password = OTP
+                user.password = str(OTP)
                 message =  "Use this password to login to your account.\n \t" + OTP
                 send_mail('Reset Password',message,settings.EMAIL_HOST_USER,[email],fail_silently=True,)
                 user.save()

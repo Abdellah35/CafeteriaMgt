@@ -6,14 +6,14 @@ from Accounts.models import *
 class Menu(models.Model):
     name = models.CharField(max_length=20)
     desc = models.TextField()
-    img = models.ImageField()
+    img = models.ImageField(upload_to='pics')
 
 
 class Meal(models.Model):
     name = models.CharField(max_length=50)
     price = models.IntegerField()
     desc = models.TextField(max_length=50)
-    img = models.ImageField()
+    img = models.ImageField(upload_to='pics')
     menu =models.ForeignKey(Menu, on_delete=models.CASCADE)
 
 class Purchase(models.Model):

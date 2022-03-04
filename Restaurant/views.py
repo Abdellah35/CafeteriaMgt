@@ -48,8 +48,13 @@ def GeneratePdf(request):
 
         # Converting the HTML template into a PDF file
         pdf = html_to_pdf('receipt.html')
+        mmm = ''
+        if order.delivery:
+            mmm = "Your order will be delivered to: "+ order.address
+        else:
+            mmm = "Your order is ready. Come and enjoy!"
         #Send receipt email for the customer
-        message= "Item: {}\nNumber of items: {}\nTotal: {} Birr.\n\n\tThank you for using our service.\n\nvisite: www.obcafeteria.herokuapp.com".format(etem,num,total)
+        message= "Ordered Item: {}\nNo_of items: {}\nTotal: {} Birr.\n\n{}\n\n\tThank you for using our service.\n\nvisite: www.obcafeteria.herokuapp.com".format(etem,num,mmm,total)
         print(message)
         send_mail('Invoice receipt',message,settings.EMAIL_HOST_USER,[email],fail_silently=True,)
          # rendering the template

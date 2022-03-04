@@ -305,7 +305,7 @@ def mealmg(request):
         name = request.POST.get('name','')
         price = request.POST.get('price','')
         desc = request.POST.get('desc','')
-        img = request.POST.get('image','')
+        img = request.POST['image']
         menu1 = request.POST.get("menu",'')
         
         mm = {

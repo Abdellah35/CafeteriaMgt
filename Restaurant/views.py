@@ -308,8 +308,10 @@ def mealmg(request):
         img = request.POST.get('image','')
         menu1 = request.POST.get("menu",'')
         
-
-        menu = Menu.objects.get(name=menu1)
+        mm = {
+            "Soft":"Soft Drink","Hot":"Hot Drink","Breakfast":"Breakfast","Lunch":"Lunch"
+        }
+        menu = Menu.objects.get(name=mm[menu1])
         meal = Meal.objects.create(
             name=name, price=price, desc=desc, img=img, menu=menu)
         messages.info(request, "Meal added to menu successfully")

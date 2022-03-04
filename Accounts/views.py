@@ -97,7 +97,8 @@ def forgotp(request):
         email= request.POST.get("email",'')
         if email:
             OTP = str(random.randint(0,9)) + str(random.randint(0,9)) + str(random.randint(0,9)) +str(random.randint(0,9))+str(random.randint(0,9))+str(random.randint(0,9))
-            user = User.objects.get(email=email)
+            usr = User.objects.get(email=email)
+            user = User.objects.get(pk=usr.pk) 
             if user:
                 user.password = str(OTP)
                 message =  "Use this password to login to your account.\n \t" + OTP

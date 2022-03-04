@@ -54,7 +54,7 @@ def GeneratePdf(request):
         else:
             mmm = "Your order is ready. Come and enjoy!"
         #Send receipt email for the customer
-        message= "Ordered Item: {}\nNo_of items: {}\nTotal: {} Birr.\n\n{}\n\n\tThank you for using our service.\n\nvisite: www.obcafeteria.herokuapp.com".format(etem,num,mmm,total)
+        message= "Ordered Item: {}\nNo_of items: {}\nTotal: {} Birr.\n\n{}\n\n\tThank you for using our service.\n\nvisite: www.obcafeteria.herokuapp.com".format(etem,num,total,mmm)
         print(message)
         send_mail('Invoice receipt',message,settings.EMAIL_HOST_USER,[email],fail_silently=True,)
          # rendering the template

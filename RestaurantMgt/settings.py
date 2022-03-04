@@ -137,7 +137,7 @@ EMAIL_HOST_USER = os.environ.get("EMAIL_USER")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASS")
 
 
-MEDIA_URL = "app/media/"
+MEDIA_URL = "/media/pics"
 MEDIA_ROOT = os.path.join(BASE_DIR , 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

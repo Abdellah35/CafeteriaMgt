@@ -9,6 +9,7 @@ from .process import html_to_pdf
 from django.template.loader import render_to_string
 from django.core.mail import BadHeaderError, send_mail
 from django.conf import settings
+import datetime
 
 
 def GeneratePdf(request):
@@ -300,7 +301,68 @@ def verall(request):
 @login_required(login_url='/accounts/login/')
 @user_passes_test(Is_Manager)
 def reportmg(request):
-    return render(request, 'employee/waiter.html')
+    if request.method == "POST":
+        day = request.POST.get("day","")
+        if day == "today":
+            time = datetime.datetime.now()
+            print("now ",time)
+            orde = Order.objects.filter(date_created=time)
+            orde_lis = list([item for item in orde])
+            orders = len(orde_lis)
+            most_sold =""
+            least_sold =""
+            td_purch = Purchase.objects.filter(date = time)
+            total_purchase = sum(list([item.price for item in td_purch]))
+            total_sale = sum(list([item.price for item in orde]))
+            bl_order= Order.objects.filter(is_blocked=True)
+            blocked_order = len(list([item for item in bl_order]))
+            cus_or = list([item.customer for item in orde])
+            cstmr = []
+            for itm in cus_or:
+                if itm not in cstmr:
+                    cstmr.append(itm)
+            customer_orders=len(cstmr)
+
+        
+        elif day == "lastweek":
+            orde = Order.objects.filter(date_created=time)
+            orde_lis = list([item for item in orde])
+            orders = len(orde_lis)
+            most_sold =""
+            least_sold =""
+            td_purch = Purchase.objects.filter(date = time)
+            total_purchase = sum(list([item.price for item in td_purch]))
+            total_sale = sum(list([item.price for item in orde]))
+            bl_order= Order.objects.filter(is_blocked=True)
+            blocked_order = len(list([item for item in bl_order]))
+            cus_or = list([item.customer for item in orde])
+            cstmr = []
+            for itm in cus_or:
+                if itm not in cstmr:
+                    cstmr.append(itm)
+            customer_orders=len(cstmr)
+            
+        elif day == "lastmonth":
+            orde = Order.objects.filter(date_created=time)
+            orde_lis = list([item for item in orde])
+            orders = len(orde_lis)
+            most_sold =""
+            least_sold =""
+            td_purch = Purchase.objects.filter(date = time)
+            total_purchase = sum(list([item.price for item in td_purch]))
+            total_sale = sum(list([item.price for item in orde]))
+            bl_order= Order.objects.filter(is_blocked=True)
+            blocked_order = len(list([item for item in bl_order]))
+            cus_or = list([item.customer for item in orde])
+            cstmr = []
+            for itm in cus_or:
+                if itm not in cstmr:
+                    cstmr.append(itm)
+            customer_orders=len(cstmr)
+            
+        else:
+            pass
+    return render(request, 'manager/report.html')
 
 #Manager manages meal (adding and removing meal)
 @login_required(login_url='/accounts/login/')

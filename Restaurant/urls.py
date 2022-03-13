@@ -10,6 +10,7 @@ urlpatterns = [
     path('myorder/remcart',views.remcart, name="remcart"),
     path('remallcart',views.remallcart,name="remallcart"),
     path('feedback',views.feedback,name="comment"),
+    path('contact',views.contact,name="contact"),
     path('manager/menumg', views.menumg, name="menumg"),
     path('manager/meal', views.mealmg, name="meal"),
     path('manager/ordermg', views.ordermg, name="ordermg"),

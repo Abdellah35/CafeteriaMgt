@@ -125,7 +125,7 @@ def menu(request):
     softdr = Meal.objects.filter(menu=Menu.objects.get(name="Soft Drink"))
     hotdr = Meal.objects.filter(menu=Menu.objects.get(name="Hot Drink"))
     print(breakfast,lunch,softdr,hotdr)
-    return render(request, 'home/menu2.html',{'meals':meals, 'carts': carts,'breakfast':breakfast,'lunch':lunch,'softdr':softdr,'hotdr':hotdr})
+    return render(request, 'home/menu.html',{'meals':meals, 'carts': carts,'breakfast':breakfast,'lunch':lunch,'softdr':softdr,'hotdr':hotdr})
 
 #check if the user is super
 def Is_Manager(user):
@@ -184,7 +184,7 @@ def myorder(request):
         itm += 1
         total += cart.price
 
-    return render(request, 'customer/myorder.html', {'itm':itm ,'carts':CP,'not_empty':not_empty,'has_order':has_order,'order': orders, 'total':total})
+    return render(request, 'customer/Orderui.html', {'itm':itm ,'carts':CP,'not_empty':not_empty,'has_order':has_order,'order': orders, 'total':total})
 
 
 def feedback(request):
@@ -210,7 +210,29 @@ def feedback(request):
             return HttpResponse('<h1 style="color:red" >Make sure all fields are entered and valid.</h1>')
     else:
         return render(request,"customer/feedback.html")
+def contact(request):
+    if request.method == "POST":
+        
+        subject = request.POST.get("subject", '')
+        message = request.POST.get('message', '')
+        from_email = request.POST.get('email', '')
+        name = request.POST.get("name",'')
 
+        body = "Name: "+name + "\n" + message
+        if subject and message and from_email:
+            try:
+                send_mail(subject, body, from_email, [settings.EMAIL_HOST_USER], fail_silently=True)
+                print("sent")
+
+            except BadHeaderError:
+                return HttpResponse('<h1 style="color:red">Invalid header found.</h1>')
+
+            return redirect('/')
+        else:
+            
+            return HttpResponse('<h1 style="color:red" >Make sure all fields are entered and valid.</h1>')
+    else:
+        return render(request,"home/home.html")
 #Manager manages the menu (adding and removing menu)
 @login_required(login_url='/accounts/login/')
 @user_passes_test(Is_Manager)

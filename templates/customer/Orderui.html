@@ -22,6 +22,7 @@
     <!-- Responsive CSS -->
     <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
     <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'home/css/templatemo-style.css' %}">
     <link rel="stylesheet" href="{% static 'css/Orderui.css' %}">
     <link rel="stylesheet" href="{% static 'css/orderma.css' %}">
     {% comment %} <link rel="stylesheet" href="{% static 'css/ordermg.css' %}">  {% endcomment %}
@@ -89,40 +90,51 @@
 </head>
 
 <body>
-  <!-- Start header -->
-	<header class="autohide top-navbar navbar">
-		<nav class="autohide navbar navbar-expand-lg navbar-light bg-light">
-			<div class="container">
-				
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-rs-food" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
-				  <span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbars-rs-food">
-					<ul class="navbar-nav ml-auto">
-						<li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-						<li class="nav-item"><a class="nav-link" href="{% url 'menu' %}">Menu</a></li>
-						{% if user.is_authenticated %}
-						<li class="nav-item"><a class="nav-link" href="#">{{user.first_name}}</a></li>
-						<li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
-						{% if not user.is_staff %}
-						<li class="nav-item active"><a class="nav-link" href="{% url 'myorder' %}">MyOrder</a></li>
-						{% endif %}
-                		{% else %}
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Login</a>
-							<div class="dropdown-menu" aria-labelledby="dropdown-a">
-								<a class="dropdown-item" href="{% url 'login' %}">Login</a>
-								<a class="dropdown-item" href="{% url 'register' %}">Register</a>
-							</div>
-						</li>
-						{% endif %}
-						<li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-						<li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-						<li class="nav-item"><a class="nav-link" href="{% url 'comment' %}">Feedback</a></li>
-					</ul>
-				</div>
-			</div>
+    <!-- Start header -->
+	<header>
+		<nav class="autohide navbar navbar-expand-lg navbar-light">
+			<section class="navbar custom-navbar navbar-fixed-top " style="width:100%" role="navigation">
+                <div class="container">
+      
+                     <div class="navbar-header">
+                          <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                               <span class="icon icon-bar"></span>
+                               <span class="icon icon-bar"></span>
+                               <span class="icon icon-bar"></span>
+                          </button>
+                     </div>
+      
+                     <!-- MENU LINKS -->
+                     <div class="collapse navbar-collapse">
+                          <ul class="nav navbar-nav navbar-nav-first">
+                               <li style="color: black;"><a class="smoothScroll" href="{% url 'home' %}">Home</a></li>
+                               <li style="color: black;"><a class="smoothScroll active" href="{% url 'menu' %}">Menu</a></li>
+                               {% if user.is_authenticated %}
+                               {% if not user.is_staff %}
+                               <li style="color: black;"><a class="smoothScroll" href="{% url 'myorder' %}">MyOrder</a></li>
+                               {% endif %}
+                               {% else %}
+                               <li style="color: black;"><a class="smoothScroll" href="{% url 'login' %}">Login</a></li>
+                               {% endif %}
+                               <li style="color: black;"><a class="smoothScroll" href="#about">About</a></li>
+                               <li style="color: black;"><a class="smoothScroll" href="#contact">Contact</a></li>
+                               <li style="color: black;"><a class="smoothScroll" href="{% url 'comment' %}">Feedback</a></li>
+                          </ul>
+      
+                          <ul class="nav navbar-nav navbar-right">
+                               {% if not user.is_authenticated %}
+                               <a href="{% url 'register' %}" class="section-btn">Register</a>
+                               {% else %}
+                               <li><a  style="color: black !important;" href="#"><i class="fa fa-user"></i> {{user.first_name}} {{user.last_name}}</a></li>
+                               <a href="{% url 'logout' %}" class="section-btn">Logout</a>
+                               {% endif %}
+                          </ul>
+                     </div>
+      
+                </div>
+           </section>
 		</nav>
+		<div class="container" style="max-width: 720px">
 	</header>
 	<!-- End header -->
   <br />
@@ -298,6 +310,15 @@
   <script src="{% static 'js/form-validator.min.js' %}"></script>
   <script src="{% static 'js/contact-form-script.js' %}"></script>
   <script src="{% static 'js/custom.js' %}"></script>
+  <!-- SCRIPTS -->
+  <script src="{% static 'home/js/jquery.js' %}"></script>
+  <script src="{% static 'home/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'home/js/jquery.stellar.min.js' %}"></script>
+  <script src="{% static 'home/js/wow.min.js' %}"></script>
+  <script src="{% static 'home/js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'home/js/jquery.magnific-popup.min.js' %}"></script>
+  <script src="{% static 'home/js/smoothscroll.js' %}"></script>
+  <script src="{% static 'home/js/custom.js' %}"></script>
   <script type="text/javascript">
       function add(id,ope,price){
         var Myelement = document.getElementById(id);

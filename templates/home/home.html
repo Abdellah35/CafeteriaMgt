@@ -3,20 +3,19 @@
 <html lang="en">
 <head>
 
-     <title>Eatery Cafe and Restaurant Template</title>
-<!-- 
+     <title>Oromia Bureaus' Cafe</title>
 
-Eatery Cafe Template 
-
-http://www.templatemo.com/tm-515-eatery
-
--->
      <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-     <meta name="description" content="">
-     <meta name="keywords" content="">
-     <meta name="author" content="">
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+     <link rel="icon" type="image/png" href="{% static 'img/icons/logo.ico' %}"/>
+     <meta name="keywords" content="Cafeteria, Order">
+     <meta name="description" content="Cafeteria for Oromia Bureaus employees and customers">
+     <meta name="author" content="JIT students">
+
+     <!-- Site Icons -->
+     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+     <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
 
      <link rel="stylesheet" href="{% static 'home/css/bootstrap.min.css' %}">
      <link rel="stylesheet" href="{% static 'home/css/font-awesome.min.css' %}">
@@ -62,29 +61,29 @@ http://www.templatemo.com/tm-515-eatery
                <!-- MENU LINKS -->
                <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-nav-first">
-                         <li><a class="smoothScroll" href="{% url 'home' %}">Home</a></li>
-                         <li><a class="smoothScroll" href="{% url 'menu' %}">Menu</a></li>
+                         <li style="color: black;"><a class="smoothScroll" href="{% url 'home' %}">Home</a></li>
+                         <li style="color: black;"><a class="smoothScroll active" href="{% url 'menu' %}">Menu</a></li>
                          {% if user.is_authenticated %}
-                         <li><a class="smoothScroll" href="#">{{user.first_name}}</a></li>
-                         <li><a class="smoothScroll" href="{% url 'logout' %}">Logout</a></li>
                          {% if not user.is_staff %}
-                         <li><a class="smoothScroll" href="{% url 'myorder' %}">MyOrder</a></li>
+                         <li style="color: black;"><a class="smoothScroll" href="{% url 'myorder' %}">MyOrder</a></li>
                          {% endif %}
-                		{% else %}
-                         <li><a class="smoothScroll" href="{% url 'login' %}">Login</a></li>
+                         {% else %}
+                         <li style="color: black;"><a class="smoothScroll" href="{% url 'login' %}">Login</a></li>
                          {% endif %}
-                         <li><a class="smoothScroll" href="#about">About</a></li>
-                         <li><a class="smoothScroll" href="#contact">Contact</a></li>
-                         <li><a class="smoothScroll" href="{% url 'comment' %}">Feedback</a></li>
+                         <li style="color: black;"><a class="smoothScroll" href="#about">About</a></li>
+                         <li style="color: black;"><a class="smoothScroll" href="#contact">Contact</a></li>
+                         <li style="color: black;"><a class="smoothScroll" href="{% url 'comment' %}">Feedback</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
                          {% if not user.is_authenticated %}
                          <a href="{% url 'register' %}" class="section-btn">Register</a>
+                         {% else %}
+                         <li><a href="#"><i class="fa fa-user"></i> {{user.first_name}} {{user.last_name}}</a></li>
+                         <a href="{% url 'logout' %}" class="section-btn">Logout</a>
                          {% endif %}
                     </ul>
                </div>
-
           </div>
      </section>
 
@@ -98,9 +97,9 @@ http://www.templatemo.com/tm-515-eatery
                               <div class="caption">
                                    <div class="container">
                                         <div class="col-md-8 col-sm-12">
-                                             <h3>Eatery Cafe &amp; Restaurant</h3>
+                                             <h3>Oromia Bureaus' Cafeteria</h3>
                                              <h1>Our mission is to provide an unforgettable experience</h1>
-                                             <a href="#team" class="section-btn btn btn-default smoothScroll">Meet our chef</a>
+                                             <a href="{% url 'register' %}" class="section-btn btn btn-default smoothScroll">SignUp</a>
                                         </div>
                                    </div>
                               </div>
@@ -110,9 +109,9 @@ http://www.templatemo.com/tm-515-eatery
                               <div class="caption">
                                    <div class="container">
                                         <div class="col-md-8 col-sm-12">
-                                             <h3>Your Perfect Breakfast</h3>
-                                             <h1>The best dinning quality can be here too!</h1>
-                                             <a href="#menu" class="section-btn btn btn-default smoothScroll">Discover menu</a>
+                                             <h3>Your Perfect Breakfast &amp; Lunch</h3>
+                                             <h1>Great quality with affordable price.</h1>
+                                             <a href="{% url 'menu' %}" class="section-btn btn btn-default smoothScroll">Discover menu</a>
                                         </div>
                                    </div>
                               </div>
@@ -122,9 +121,9 @@ http://www.templatemo.com/tm-515-eatery
                               <div class="caption">
                                    <div class="container">
                                         <div class="col-md-8 col-sm-12">
-                                             <h3>New Restaurant in Town</h3>
-                                             <h1>Enjoy our special menus every Sunday and Friday</h1>
-                                             <a href="#contact" class="section-btn btn btn-default smoothScroll">Reservation</a>
+                                             <h3>Oromia Bureaus' Cafe</h3>
+                                             <h1>Enjoy our special menus every Monday and Friday</h1>
+                                             <a href="{% url 'myorder' %}" class="section-btn btn btn-default smoothScroll">Order Now</a>
                                         </div>
                                    </div>
                               </div>
@@ -143,7 +142,7 @@ http://www.templatemo.com/tm-515-eatery
 					<div class="inner-column">
 						<h1>Welcome To <span>Oromia Bureaus' Cafeteria</span></h1>
 						<h4>Little Story</h4>
-						<p>Oromia Bureaus' Cafeteria is a non-profit organization established by the Oromia government to serve its customers.</p>
+						<p>Oromia Bureaus' Cafeteria is a non-profit organization established by the Government Oromia to serve its customers.</p>
 						<p>Below Pushkin Square, you will find us on the left side of the road leading to Qera.</p>
 						<a class="btn btn-lg btn-circle btn-outline-new-white text-center" href="{% url 'menu' %}">Order now</a>
 					</div>
@@ -163,23 +162,23 @@ http://www.templatemo.com/tm-515-eatery
                     <div class="col-md-12 col-sm-12">
                          <div class="section-title wow fadeInUp" data-wow-delay="0.1s">
                               <h2>Our Menus</h2>
-                              <h4>Tea Time &amp; Dining</h4>
+                              <h4>...</h4>
                          </div>
                     </div>
 
                     <div class="col-md-4 col-sm-6">
                          <!-- MENU THUMB -->
                          <div class="menu-thumb">
-                              <a href="{% static 'img/galary-1.jpg' %}" class="image-popup" title="American Breakfast">
+                              <a href="{% static 'img/galary-1.jpg' %}" class="image-popup" title="Lunch">
                                    <img src="{% static 'img/galary-1.jpg' %}" class="img-responsive" alt="">
 
                                    <div class="menu-info">
                                         <div class="menu-item">
-                                             <h3>American Breakfast</h3>
-                                             <p>Tomato / Eggs / Sausage</p>
+                                             <h3>Aynet</h3>
+                                             <p>Tomato / beet root / Salad ...</p>
                                         </div>
                                         <div class="menu-price">
-                                             <span>$25</span>
+                                             <span>30 Br</span>
                                         </div>
                                    </div>
                               </a>
@@ -189,16 +188,16 @@ http://www.templatemo.com/tm-515-eatery
                     <div class="col-md-4 col-sm-6">
                          <!-- MENU THUMB -->
                          <div class="menu-thumb">
-                              <a href="{% static 'img/galary-2.jpg' %}" class="image-popup" title="Self-made Salad">
+                              <a href="{% static 'img/galary-2.jpg' %}" class="image-popup" title="Soft Drink">
                                    <img src="{% static 'img/galary-2.jpg' %}" class="img-responsive" alt="">
 
                                    <div class="menu-info">
                                         <div class="menu-item">
-                                             <h3>Self-made Salad</h3>
-                                             <p>Green / Fruits / Healthy</p>
+                                             <h3>Coca-Cola</h3>
+                                             <p>Soft drink </p>
                                         </div>
                                         <div class="menu-price">
-                                             <span>$18</span>
+                                             <span>13 Br</span>
                                         </div>
                                    </div>
                               </a>
@@ -208,16 +207,16 @@ http://www.templatemo.com/tm-515-eatery
                     <div class="col-md-4 col-sm-6">
                          <!-- MENU THUMB -->
                          <div class="menu-thumb">
-                              <a href=""{% static 'img/galary-3.jpg' %}" class="image-popup" title="Chinese Noodle">
-                                   <img src=""{% static 'img/galary-3.jpg' %}" class="img-responsive" alt="">
+                              <a href="{% static 'img/galary-3.jpg' %}" class="image-popup" title="Hot drink">
+                                   <img src="{% static 'img/galary-3.jpg' %}" class="img-responsive" alt="">
 
                                    <div class="menu-info">
                                         <div class="menu-item">
-                                             <h3>Chinese Noodle</h3>
-                                             <p>Pepper / Chicken / Vegetables</p>
+                                             <h3>Milk</h3>
+                                             <p>Natural Cow milk/ Hot drink</p>
                                         </div>
                                         <div class="menu-price">
-                                             <span>$34</span>
+                                             <span>10 Br</span>
                                         </div>
                                    </div>
                               </a>
@@ -227,16 +226,16 @@ http://www.templatemo.com/tm-515-eatery
                     <div class="col-md-4 col-sm-6">
                          <!-- MENU THUMB -->
                          <div class="menu-thumb">
-                              <a href="{% static 'img/galary-4.jpg' %}" class="image-popup" title="Rice Soup">
+                              <a href="{% static 'img/galary-4.jpg' %}" class="image-popup" title="Lunch">
                                    <img src="{% static 'img/galary-4.jpg' %}" class="img-responsive" alt="">
 
                                    <div class="menu-info">
                                         <div class="menu-item">
-                                             <h3>Rice Soup</h3>
-                                             <p>Green / Chicken</p>
+                                             <h3>Pasta</h3>
+                                             <p>Spaghetti / Beef / Vegetables</p>
                                         </div>
                                         <div class="menu-price">
-                                             <span>$28</span>
+                                             <span>30 Br</span>
                                         </div>
                                    </div>
                               </a>
@@ -246,16 +245,16 @@ http://www.templatemo.com/tm-515-eatery
                     <div class="col-md-4 col-sm-6">
                          <!-- MENU THUMB -->
                          <div class="menu-thumb">
-                              <a href="{% static 'img/galary-5.jpg' %}" class="image-popup" title="Project title">
+                              <a href="{% static 'img/galary-5.jpg' %}" class="image-popup" title="Breakfast">
                                    <img src="{% static 'img/galary-5.jpg' %}" class="img-responsive" alt="">
 
                                    <div class="menu-info">
                                         <div class="menu-item">
-                                             <h3>Deli Burger</h3>
-                                             <p>Beef / Fried Potatoes</p>
+                                             <h3>Pizza</h3>
+                                             <p>Simple to ...</p>
                                         </div>
                                         <div class="menu-price">
-                                             <span>$46</span>
+                                             <span>20 Br</span>
                                         </div>
                                    </div>
                               </a>
@@ -265,16 +264,16 @@ http://www.templatemo.com/tm-515-eatery
                     <div class="col-md-4 col-sm-6">
                          <!-- MENU THUMB -->
                          <div class="menu-thumb">
-                              <a href="{% static 'img/galary-6.jpg' %}" class="image-popup" title="Project title">
+                              <a href="{% static 'img/galary-6.jpg' %}" class="image-popup" title="Lunch">
                                    <img src="{% static 'img/galary-6.jpg' %}" class="img-responsive" alt="">
 
                                    <div class="menu-info">
                                         <div class="menu-item">
-                                             <h3>Big Flat Fried</h3>
-                                             <p>Pepper / Crispy</p>
+                                             <h3>McCormick</h3>
+                                             <p>McCormick / Fried Potatoes</p>
                                         </div>
                                         <div class="menu-price">
-                                             <span>$30</span>
+                                             <span>30 Br</span>
                                         </div>
                                    </div>
                               </a>
@@ -360,7 +359,8 @@ http://www.templatemo.com/tm-515-eatery
                          </div>
 
                          <!-- CONTACT FORM -->
-                         <form action="#" method="post" class="wow fadeInUp" id="contact-form" role="form" data-wow-delay="0.8s">
+                         <form action="contact" method="post" class="wow fadeInUp" id="contact-form" role="form" data-wow-delay="0.8s">
+                              {% csrf_token %}
 
                               <!-- IF MAIL SENT SUCCESSFUL  // connect this with custom JS -->
                               <h6 class="text-success">Your message has been sent successfully.</h6>
@@ -379,7 +379,7 @@ http://www.templatemo.com/tm-515-eatery
                               <div class="col-md-12 col-sm-12">
                                    <input type="text" class="form-control" id="cf-subject" name="subject" placeholder="Subject">
 
-                                   <textarea class="form-control" rows="6" id="cf-message" name="message" placeholder="Tell about your project"></textarea>
+                                   <textarea class="form-control" rows="6" id="cf-message" name="message" placeholder="Tell us ..."></textarea>
 
                                    <button type="submit" class="form-control" id="cf-submit" name="submit">Send Message</button>
                               </div>
@@ -443,7 +443,7 @@ http://www.templatemo.com/tm-515-eatery
 				</div>
 				<div class="col-lg-3 col-md-8">
 					<h3>Opening hours</h3>
-					<p><span class="text-color">Mon-Fri: </span> 8:Am - 5PM</p>
+					<p><span class="text-color">Mon-Fri: </span> 8:AM - 5PM</p>
 					<p><span class="text-color">Sat-Sun: </span>Closed</p>
 				</div>
 				<div class="col-lg-3 col-md-8">

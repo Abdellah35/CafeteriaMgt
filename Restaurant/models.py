@@ -26,6 +26,7 @@ class Purchase(models.Model):
     by = models.CharField(max_length=50)
     date = models.DateTimeField(auto_now_add=True, null=True)
     total = models.CharField(max_length=50)
+    datet = models.CharField(max_length=10)
 
     
 class Order(models.Model):
@@ -34,6 +35,7 @@ class Order(models.Model):
     waiter = models.CharField(max_length=50)
     item = models.CharField(max_length=500, null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date = models.CharField(max_length=10)
     address = models.CharField(max_length=500, null=True)
     status = models.CharField(max_length=20, null=True)
     price = models.CharField(max_length=20, null=True)

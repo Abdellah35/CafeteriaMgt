@@ -7,6 +7,7 @@ from django.contrib.auth import logout
 from django.core.mail import BadHeaderError, send_mail
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
+import datetime
 # Create your views here.
 
 
@@ -30,7 +31,7 @@ def register(request):
                 messages.info(request, 'Email is already taken.')
                 return redirect('register')
             else:
-                user = User.objects.create_user(username=email,
+                user = User.objects.create_user(date_joined=str(datetime.datetime.now()).split()[0],username=email,
                                                 first_name=fname, last_name=lname, password=password, email=email)
                 user.save()
                 customer = Customer.objects.create(

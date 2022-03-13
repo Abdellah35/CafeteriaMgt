@@ -11,6 +11,8 @@ from django.core.mail import BadHeaderError, send_mail
 from django.conf import settings
 import datetime
 
+from .forms import MealForm
+
 
 def GeneratePdf(request):
         Dicc = {}
@@ -96,7 +98,7 @@ def remallcart(request):
 #returns Home page
 def index(request):
     
-    return render(request, 'home/index.html')
+    return render(request, 'home/home.html')
 
 # shows Menu for visitors
 def menu(request):
@@ -123,7 +125,7 @@ def menu(request):
     softdr = Meal.objects.filter(menu=Menu.objects.get(name="Soft Drink"))
     hotdr = Meal.objects.filter(menu=Menu.objects.get(name="Hot Drink"))
     print(breakfast,lunch,softdr,hotdr)
-    return render(request, 'home/menu.html',{'meals':meals, 'carts': carts,'breakfast':breakfast,'lunch':lunch,'softdr':softdr,'hotdr':hotdr})
+    return render(request, 'home/menu2.html',{'meals':meals, 'carts': carts,'breakfast':breakfast,'lunch':lunch,'softdr':softdr,'hotdr':hotdr})
 
 #check if the user is super
 def Is_Manager(user):
@@ -151,7 +153,8 @@ def order(request):
         chef = Employ.objects.filter(emp_type = 'chef')
         waiter = Employ.objects.filter(emp_type = 'waiter')
         status = 'Pending'
-        order = Order(delivery=delivery,customer= request.user ,address=custom.address, chef = chef[0].employe.username,waiter=waiter[0].employe.username, item=item, status=status, price=price )
+        date = str(datetime.datetime.now()).split()[0]
+        order = Order(date=date,delivery=delivery,customer= request.user ,address=custom.address, chef = chef[0].employe.username,waiter=waiter[0].employe.username, item=item, status=status, price=price )
         custom.orders += 1
         custom.total_sale += price
         custom.save()
@@ -165,7 +168,7 @@ def order(request):
 def myorder(request):
     total =0
     CP = Cart.objects.filter(customer=request.user)
-    orders = Order.objects.filter(customer=request.user,is_payed=False, is_blocked=False)
+    orders = Order.objects.filter(customer=request.user,is_payed=False, is_blocked=False,is_picked=False)
     not_empty = True
     has_order = True
     itm = 0
@@ -181,7 +184,7 @@ def myorder(request):
         itm += 1
         total += cart.price
 
-    return render(request, 'customer/Orderui.html', {'itm':itm ,'carts':CP,'not_empty':not_empty,'has_order':has_order,'order': orders, 'total':total})
+    return render(request, 'customer/myorder.html', {'itm':itm ,'carts':CP,'not_empty':not_empty,'has_order':has_order,'order': orders, 'total':total})
 
 
 def feedback(request):
@@ -303,90 +306,259 @@ def verall(request):
 def reportmg(request):
     if request.method == "POST":
         day = request.POST.get("day","")
+        overall = {}
+        manager = request.user.first_name +" " + request.user.last_name
+        days = ''
+        time = str(datetime.datetime.now()).split()[0]
+        orders = 0
+        most_sold = ''
+        total_purchase = 0
+        total_sale = 0
+        blocked_order = 0
+        customer_orders = 0
+        delivered = 0
+        new_customers  = 0
+        print(manager)
         if day == "today":
-            time = datetime.datetime.now()
-            print("now ",time)
-            orde = Order.objects.filter(date_created=time)
-            orde_lis = list([item for item in orde])
-            orders = len(orde_lis)
-            most_sold =""
-            least_sold =""
-            td_purch = Purchase.objects.filter(date = time)
-            total_purchase = sum(list([item.price for item in td_purch]))
-            total_sale = sum(list([item.price for item in orde]))
-            bl_order= Order.objects.filter(is_blocked=True)
-            blocked_order = len(list([item for item in bl_order]))
-            cus_or = list([item.customer for item in orde])
-            cstmr = []
-            for itm in cus_or:
-                if itm not in cstmr:
-                    cstmr.append(itm)
-            customer_orders=len(cstmr)
+            days = 'Today'
+            time = str(datetime.datetime.now()).split()[0]
 
-        
-        elif day == "lastweek":
-            orde = Order.objects.filter(date_created=time)
-            orde_lis = list([item for item in orde])
-            orders = len(orde_lis)
-            most_sold =""
-            least_sold =""
-            td_purch = Purchase.objects.filter(date = time)
-            total_purchase = sum(list([item.price for item in td_purch]))
-            total_sale = sum(list([item.price for item in orde]))
-            bl_order= Order.objects.filter(is_blocked=True)
+            #all orders of today
+            orde = Order.objects.filter(date=time, is_payed=True)
+            overall["orders"] = orde.count()
+
+            #Todays most sold item
+            ordic={}
+            for order in orde:
+                items = order.item.split(", ")
+                for od in items:
+                    if od != "":
+                        itm = od.split("*")
+                        if itm[0] not in ordic:
+                            ordic[itm[0]] = 0
+                        ordic[itm[0]] += int(itm[1])
+            mxv = sorted(ordic.items(),key=lambda x:x[1],reverse=True)[0]
+            most_sold = mxv[0] +": " + str(mxv[1])
+            overall["most_sold"] = most_sold
+
+            #total today purchased in birr
+            td_purch = Purchase.objects.filter(datet = time)
+            total_purchase = sum(list([float(item.total) for item in td_purch]))
+            overall["total_purchase"] = total_purchase
+
+            #total sale of of today
+            total_sale = sum(list([float(item.price) for item in orde]))
+            overall["total_sale"] = total_sale
+
+            #orders blocked by manager
+            bl_order= Order.objects.filter(is_blocked=True, date=time)
             blocked_order = len(list([item for item in bl_order]))
+            overall["blocked_order"] = blocked_order
+
+            #total number of customers who ordered 
             cus_or = list([item.customer for item in orde])
             cstmr = []
             for itm in cus_or:
                 if itm not in cstmr:
                     cstmr.append(itm)
             customer_orders=len(cstmr)
+            overall["customer_orders"] = customer_orders
+            #delivered orders (outside the cafeteria)
+            orde = Order.objects.filter(date=time, is_payed=True, delivery=True)
+            orde_lis = list([item for item in orde])
+            delivered = len(orde_lis)
+            overall["delivered"] = delivered
+
+            #New Customers who joined the online system this week
+            new_customers = Customer.objects.filter(date_joined=time).count()
+            overall["new_customers"] = new_customers
+            print(overall)
+        elif day == "lastweek":
+            days = 'Last Week'
+            time = str(datetime.datetime.now()).split()[0]
+
+            #all orders of today
+            orders = sum(list([Order.objects.filter(date=str(datetime.datetime.now()-datetime.timedelta(days=i)).split()[0],is_payed=True).count() for i in range(7)]))
+            overall["orders"] = orders
+            #Todays most sold item
+            ordic={}
+            total_sale = 0
+            cus_or = []
+            for i in range(7):
+                orde = Order.objects.filter(date=str(datetime.datetime.now()-datetime.timedelta(days=i)).split()[0],is_payed=True)
+                for order in orde:
+                    total_sale += sum(list([float(item.price) for item in orde]))
+                    cus_or += list([item.customer for item in orde])
+                    items = order.item.split(", ")
+                    for od in items:
+                        if od != "":
+                            itm = od.split("*")
+                            if itm[0] not in ordic:
+                                ordic[itm[0]] = 0
+                            ordic[itm[0]] += int(itm[1].strip(", "))
+            mxv = sorted(ordic.items(),key=lambda x:x[1],reverse=True)[0]
+            most_sold = mxv[0] +": " + str(mxv[1])
+            overall["most_sold"] = most_sold
+
+            #total today purchased in birr
+            total_purchase = 0
+            for i in range(7):
+                td_purch = Purchase.objects.filter(datet=str(datetime.datetime.now()-datetime.timedelta(days=i)).split()[0])
+                total_purchase += sum(list([float(item.total) for item in td_purch]))
+            overall["total_purchase"] = total_purchase
+
+            #total sale of of today
+            overall["total_sale"] = total_sale
+
+            #orders blocked by manager
+            blocked_order = 0
+            for i in range(7):
+                bl_order = Order.objects.filter(date=str(datetime.datetime.now()-datetime.timedelta(days=i)).split()[0],is_blocked=True)
+                blocked_order += bl_order.count()
+            overall["blocked_order"] = blocked_order
+
+            #total number of customers who ordered 
+            
+            cstmr = []
+            for itm in cus_or:
+                if itm not in cstmr:
+                    cstmr.append(itm)
+            customer_orders=len(cstmr)
+            overall["customer_orders"] = customer_orders
+
+            #delivered orders (outside the cafeteria)
+            delivered = 0
+            for i in range(7):
+                delivered += Order.objects.filter(date=str(datetime.datetime.now()-datetime.timedelta(days=i)).split()[0], is_payed=True, delivery=True).count()
+            overall["delivered"] = delivered
+            
+            #New Customers who joined the online system this week
+            new_customers = 0
+            for i in range(7):
+                new_customers += Customer.objects.filter(date_joined=str(datetime.datetime.now()-datetime.timedelta(days=i)).split()[0]).count()
+            overall["new_customers"] = new_customers
+            print(overall)
+           
             
         elif day == "lastmonth":
-            orde = Order.objects.filter(date_created=time)
-            orde_lis = list([item for item in orde])
-            orders = len(orde_lis)
-            most_sold =""
-            least_sold =""
-            td_purch = Purchase.objects.filter(date = time)
-            total_purchase = sum(list([item.price for item in td_purch]))
-            total_sale = sum(list([item.price for item in orde]))
-            bl_order= Order.objects.filter(is_blocked=True)
-            blocked_order = len(list([item for item in bl_order]))
-            cus_or = list([item.customer for item in orde])
+            days = 'Last Month'
+            time = str(datetime.datetime.now()).split()[0]
+
+            #all orders of today
+            #orde = Order.objects.filter(date=time, is_payed=True)
+            orders = sum(list([Order.objects.filter(date=str(datetime.datetime.now()-datetime.timedelta(days=i)).split()[0],is_payed=True).count() for i in range(30)]))
+            overall["orders"] = orders
+
+            #Todays most sold item
+            ordic={}
+            total_sale = 0
+            cus_or = []
+            for i in range(30):
+                orde = Order.objects.filter(date=str(datetime.datetime.now()-datetime.timedelta(days=i)).split()[0],is_payed=True)
+                for order in orde:
+                    total_sale += sum(list([float(item.price) for item in orde]))
+                    cus_or += list([item.customer for item in orde])
+                    items = order.item.split(", ")
+                    for od in items:
+                        if od != "":
+                            itm = od.split("*")
+                            if itm[0] not in ordic:
+                                ordic[itm[0]] = 0
+                            ordic[itm[0]] += int(itm[1].strip(", "))
+            mxv = sorted(ordic.items(),key=lambda x:x[1],reverse=True)[0]
+            most_sold = mxv[0] +": " + str(mxv[1])
+            overall["most_sold"] = most_sold
+
+            
+
+            #total today purchased in birr
+            #td_purch = Purchase.objects.filter(datet = time)
+            total_purchase = 0
+            for i in range(30):
+                td_purch = Purchase.objects.filter(datet=str(datetime.datetime.now()-datetime.timedelta(days=i)).split()[0])
+                total_purchase += sum(list([float(item.total) for item in td_purch]))
+            overall["total_purchase"] = total_purchase
+
+            #total sale of of today
+            overall["total_sale"] = total_sale
+
+            #orders blocked by manager
+            blocked_order = 0
+            for i in range(30):
+                bl_order = Order.objects.filter(date=str(datetime.datetime.now()-datetime.timedelta(days=i)).split()[0],is_blocked=True)
+                blocked_order += bl_order.count()
+            overall["blocked_order"] = blocked_order
+
+            #total number of customers who ordered 
+            
             cstmr = []
             for itm in cus_or:
                 if itm not in cstmr:
                     cstmr.append(itm)
             customer_orders=len(cstmr)
+            overall["customer_orders"] = customer_orders
+
+            #delivered orders (outside the cafeteria)
+            delivered = 0
+            for i in range(30):
+                delivered += Order.objects.filter(date=str(datetime.datetime.now()-datetime.timedelta(days=i)).split()[0], is_payed=True, delivery=True).count()
+            overall["delivered"] = delivered
+            
+            #New Customers who joined the online system this week
+            new_customers = 0
+            for i in range(30):
+                new_customers += Customer.objects.filter(date_joined=str(datetime.datetime.now()-datetime.timedelta(days=i)).split()[0]).count()
+            overall["new_customers"] = new_customers
+            print(overall)
+           
             
         else:
             pass
+        open('templates/reports.html', "w").write(render_to_string('manager/reportpdf.html',{'days': days, "orders":orders,"manager": manager ,
+            "most_sold":most_sold,"total_purchase":total_purchase,"total_sale":total_sale,"blocked_order":blocked_order, 
+            "customer_orders":customer_orders,"delivered":delivered,"new_customers":new_customers ,"date":time}))
+
+        # Converting the HTML template into a PDF file
+        pdf = html_to_pdf('reports.html')
+        return HttpResponse(pdf, content_type='application/pdf')
     return render(request, 'manager/report.html')
 
 #Manager manages meal (adding and removing meal)
 @login_required(login_url='/accounts/login/')
 @user_passes_test(Is_Manager)
 def mealmg(request):
+    form = MealForm()
+
     if request.method == 'POST':
-        name = request.POST.get('name','')
-        price = request.POST.get('price','')
-        desc = request.POST.get('desc','')
-        img = request.POST['image']
-        menu1 = request.POST.get("menu",'')
-        mm = {
-            "Soft":"Soft Drink","Hot":"Hot Drink","Breakfast":"Breakfast","Lunch":"Lunch"
-        }
-        menu = Menu.objects.get(name=mm[menu1])
-        meal = Meal.objects.create(
-            name=name, price=price, desc=desc, img=img, menu=menu)
-        messages.info(request, "Meal added to menu successfully")
-        return redirect('meal')
+        form = MealForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
     else:
         meals = Meal.objects.all()
         menus = Menu.objects.all()
+        context = {'form': form, 'menus': menus,'meals': meals}
+        return render(request, 'manager/mealmg.html', context)
+    # if request.method == 'POST':
 
-        return render(request, 'manager/mealmg.html',{'menus': menus,'meals': meals})
+    #     name = request.POST.get('name','')
+    #     price = request.POST.get('price','')
+    #     desc = request.POST.get('desc','')
+    #     img = request.POST['image']
+    #     menu1 = request.POST.get("menu",'')
+    #     mm = {
+    #         "Soft":"Soft Drink","Hot":"Hot Drink","Breakfast":"Breakfast","Lunch":"Lunch"
+    #     }
+    #     menu = Menu.objects.get(name=mm[menu1])
+    #     meal = Meal.objects.create(
+    #         name=name, price=price, desc=desc, img=img, menu=menu)
+    #     messages.info(request, "Meal added to menu successfully")
+    #     return redirect('meal')
+    # else:
+    #     meals = Meal.objects.all()
+    #     menus = Menu.objects.all()
+
+    #     return render(request, 'manager/mealmg.html',{'menus': menus,'meals': meals})
 
 #Manager register employees here
 @login_required(login_url='/accounts/login/')
@@ -535,7 +707,8 @@ def supplier(request):
         desc = request.POST.get('desc','')
         group = request.POST.get('group','')
         total = int(price) * int(amount)
-        purchase = Purchase.objects.create(total=total,by=request.user.username, name=name,price=price, unit=unit, amount=amount, desc=desc, group=group)
+        date = str(datetime.datetime.now()).split()[0]
+        purchase = Purchase.objects.create(datet=date,total=total,by=request.user.username, name=name,price=price, unit=unit, amount=amount, desc=desc, group=group)
         purchase.save()
 
     return render(request, "employee/supplier.html")

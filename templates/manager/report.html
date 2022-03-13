@@ -25,8 +25,7 @@
     <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/custom.css' %}">
-    <link href="{% static 'css/table.css' %}" type="text/css" rel="stylesheet" />
-    <link href="{% static 'css/regpop.css' %}" type="text/css" rel="stylesheet" />
+    <link href="{% static 'css/register.css' %}" type="text/css" rel="stylesheet" />
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -119,19 +118,35 @@
   <br />
   <br />
   <br /><br />
-  <div class="d1">
-    <p>By clicking the "Generate Report" button you can generate  report of today, last week or last month.</p>
-    <p> note: last week or month mean the last 7 days or 30 days including today.</p><br />
-    <h5>for</h5> 
-    <form action="{% url 'report' %}" method="post">
+  <div class="center"style="width:100%; text-align: center;">
+    <p style="width:100%; text-align: center; color: green;">By clicking "Generate Report" button below you can generate  report of today, last week or last month.</p>
+    <p style="width:100%; text-align: center; color: green;"> note: last week or month mean the last 7 days or 30 days including today.</p><br />
+    
+      <form action="{% url 'report' %}" method="post">
         {% csrf_token %}
-        <select name="day" style="display: inline;">
-            <option value="toady">Today</option>
-            <option value="lastweek">Last Week</option>
-            <option value="lastmonth">Last Month</option> 
-        </select>
-        <input type="submit" value="Generate Report" style="display: inline;"/>
-    </form>
+        <div class="row clearfix center" style="width:100%; text-align: center !important;" >
+          <div class="col_half">
+            <h5 class="center ml-5 mt-2" style=" display: inline-block; padding: 1px; font-size:15px; text-align:center; font-weight: bold; margin-right: 10px;">for</h5> 
+          </div>
+          <div class="col_half">
+            <div class="input_field select_option d-flex">
+              <select name="day" style="font-size:15px; ">
+                <option value="today">Today</option>
+                <option value="lastweek">Last Week</option>
+                <option value="lastmonth">Last Month</option> 
+              </select>
+              <div class="select_arrow"></div>
+            </div>
+          </div>
+          <div class="col_half">
+            <input type="submit" class="button" value="Generate Report" style="display: inline-block; font-size:15px; font-weight: bold; margin-left: 15px; padding:1px; color: green; background: none; cursor:pointer; border-radius:5px" />
+          </div>
+        </div>
+      </form>
+    </div>
+    <br />
+    <br />
+    <br /><br /><br />
   </div>
    <!-- Start Footer -->
    	<!-- Start Footer -->

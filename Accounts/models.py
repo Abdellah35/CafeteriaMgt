@@ -27,5 +27,6 @@ class Customer(models.Model):
     phone = models.CharField(max_length=15, null=True)
     orders = models.IntegerField(default=0)
     total_sale = models.IntegerField(default=0)
+    date_joined = models.CharField(max_length=10, null=True)
 
 

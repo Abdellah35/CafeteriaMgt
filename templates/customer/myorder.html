@@ -1,0 +1,261 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+     <title>Eatery Cafe and Restaurant Template</title>
+<!-- 
+
+Eatery Cafe Template 
+
+http://www.templatemo.com/tm-515-eatery
+
+-->
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="author" content="">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="{% static 'home/css/bootstrap.min.css' %}">
+     <link rel="stylesheet" href="{% static 'home/css/font-awesome.min.css' %}">
+     <link rel="stylesheet" href="{% static 'home/css/animate.css' %}">
+     <link rel="stylesheet" href="{% static 'home/css/owl.carousel.css' %}">
+     <link rel="stylesheet" href="{% static 'home/css/owl.theme.default.min.css' %}">
+     <link rel="stylesheet" href="{% static 'home/css/magnific-popup.css' %}">    
+     <!-- Site CSS -->
+     <link rel="stylesheet" href="{% static 'css/style.css' %}">    
+     <!-- Responsive CSS -->
+     <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+     <!-- MAIN CSS -->
+     <link rel="stylesheet" href="{% static 'home/css/templatemo-style.css' %}">
+     <link rel="stylesheet" href="{% static 'css/Orderui.css' %}">
+     <link rel="stylesheet" href="{% static 'css/orderma.css' %}">
+
+</head>
+<body>
+
+     <!-- PRE LOADER -->
+     <section class="preloader">
+          <div class="spinner">
+
+               <span class="spinner-rotate"></span>
+               
+          </div>
+     </section>
+
+
+     <!-- MENU -->
+     <section class="navbar custom-navbar navbar-fixed-top" role="navigation">
+          <div class="container">
+
+               <div class="navbar-header">
+                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                    </button>
+
+                    <!-- lOGO TEXT HERE -->
+                    <a href="{% url 'home' %}" class="navbar-brand">Oromia Bureaus' <span>.</span> Cafe</a>
+               </div>
+
+               <!-- MENU LINKS -->
+               <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-nav-first">
+                         <li><a class="smoothScroll" href="{% url 'home' %}">Home</a></li>
+                         <li><a class="smoothScroll" href="{% url 'menu' %}">Menu</a></li>
+                         {% if user.is_authenticated %}
+                         <li><a class="smoothScroll" href="#">{{user.first_name}}</a></li>
+                         <li><a class="smoothScroll" href="{% url 'logout' %}">Logout</a></li>
+                         {% if not user.is_staff %}
+                         <li><a class="smoothScroll" href="{% url 'myorder' %}">MyOrder</a></li>
+                         {% endif %}
+                		{% else %}
+                         <li><a class="smoothScroll" href="{% url 'login' %}">Login</a></li>
+                         {% endif %}
+                         <li><a class="smoothScroll" href="#about">About</a></li>
+                         <li><a class="smoothScroll" href="#contact">Contact</a></li>
+                         <li><a class="smoothScroll" href="{% url 'comment' %}">Feedback</a></li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                         {% if not user.is_authenticated %}
+                         <a href="{% url 'register' %}" class="section-btn">Register</a>
+                         {% endif %}
+                    </ul>
+               </div>
+
+          </div>
+     </section>
+     
+     <div class="Cart-Container">
+        {% if has_order %}
+        <h1></h1>
+        <div class="text-center mt-5">
+            <h1 class="no-item" style="color: blueviolet;">Order status: <u>{{order.status}}</u> </h1>
+            <h1 class="no-item" style="color: blueviolet;">The order will be processed in a short time.</h1>
+            <h1 class="no-item mt-5" style="color: green;">Thank you! for using our service..</h1>
+        </div>
+        {% elif not_empty %}
+        <div class="Header">
+            <h3 class="Headi">Shopping Cart</h3>
+            <form id="Form3" action="{% url 'remallcart' %}" method="post">
+                {% csrf_token %}
+                
+                <input type="hidden" form="Form3" name="removeall" value={{user.username}} />
+                <h5 class="Action"><input type="submit" class="ver" form="Form3" value="Remove all"/></h5>
+            </form>
+        </div>
+        <form id="Form1" action="{% url 'order' %}" method="post">
+            {% csrf_token %}
+            {% for cart in carts %}
+            <div class="Cart-Items d-flex justify-content-between">
+                <div class="d-flex">
+                    <div class="image-box" style="display: inline !important;">
+                        <img src={{cart.img}} class="big"  style="max-width: 50px !important;"/>
+                    </div>
+                    <div class="about d-flex" style=" margin-left: 60px !important; display: inline !important;">
+                        <h1 class="title">{{cart.name}}</h1>
+                        <input form="Form1" type="hidden" name="name" value={{cart.name}}  />
+                        <img src="{% static 'img/green.png' %}" class="small" />
+                    </div>
+                </div>
+                <div class="counter">
+                    <div class="fw-bold text-1000 text-center" style="min-width: 25px !important;max-height: 25px !important; border-radius: 100%; cursor:pointer; background-color: green !important; color: white !important" onclick="add({{cart.id}},'add',{{cart.price}})">+</div>
+                    <input form="Form1" type="text" class="count"  name="{{cart.name}}" value={{cart.quantity}} id="{{cart.id}}" />
+                    <!-- <div class="count">2</div> -->
+                    <div class="fw-bold text-1000 text-center" style=" min-width: 25px !important;max-height: 25px !important; border-radius: 100%; cursor:pointer; background-color: red !important; color: white !important" onclick="add({{cart.id}},'sub',{{cart.price}})">-</div>
+                </div>
+                <div class="prices mr-5">
+                    <div class="amount">{{cart.price}}</div>
+                    {% comment %} <div class="save"><u>Save for later</u></div> {% endcomment %}
+                    <form id= "Form2" action="{% url 'remcart' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" form="Form2" name="name" value={{cart.name}} />
+                        <input type="hidden" form="Form2"  name="customer" value={{cart.customer}} />
+                        <div class="remove"><input form="Form2" class="remove" type="submit" value="Remove"/></div>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+            <hr >
+            <div class="checkout">
+                <div class="d-flex justify-content-between"><span class="fw-bold text-1000"><b>Delivery service? </b></span><input form="Form1" type="checkbox" name="delivery" /></div>
+                <div class="total">
+                    <div>
+                        <div class="Subtotal">Sub-Total</div>
+                        <div class="items">{{itm}} items</div>
+                    </div>
+                    <div class="total-amount" id="total-amount">{{total}}</div>Br.
+                </div>
+                <button form="Form1" type="submit" class="button">Checkout</button>
+            </div>
+        </form>
+        {% else %}
+        <div class="Header">
+            <h3 class="Headi">Shopping Cart</h3>
+            <form id="Form3" action="{% url 'remallcart' %}" method="post">
+                {% csrf_token %}
+                
+                <input type="hidden" form="Form3" name="removeall" value={{user.username}} />
+                <h5 class="Action"><input type="submit" class="ver" form="Form3" value="Remove all"/></h5>
+            </form>
+        </div>
+        <div class="mt-8">
+            <h1 class="no-item">You have no item in your basket</h1>
+            <h3 class="no-item-red">To order please check our menu <a href="{% url 'menu' %}">here</a></h3>
+        </div>
+        {% endif %}
+    </div>
+     	<!-- Start Contact info -->
+	<div class="contact-imfo-box">
+		<div class="container" id="contact">
+			<div class="row">
+				<div class="col-md-4 arrow-right">
+					<i class="fa fa-volume-control-phone"></i>
+					<div class="overflow-hidden">
+						<h4>Phone</h4>
+						<p class="lead">
+							+251 935-365-079
+						</p>
+					</div>
+				</div>
+				<div class="col-md-4 arrow-right">
+					<i class="fa fa-envelope"></i>
+					<div class="overflow-hidden">
+						<h4>Email</h4>
+						<p class="lead">
+							obcafe22@gmail.com
+						</p>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<i class="fa fa-map-marker"></i>
+					<div class="overflow-hidden">
+						<h4>Location</h4>
+						<p class="lead">
+							Sarbet, Addis Ababa, Ethiopia
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Contact info -->
+	
+	<!-- Start Footer -->
+	<footer class="footer-area bg-f">
+		<div class="container" id="about">
+			<div class="row">
+				<div class="col-lg-3 col-md-8">
+					<h3>About Us</h3>
+					<p>Oromia Bureaus' Cafeteria is a non-profit organization established by the Oromia government to serve its customers.</p>
+				</div>
+				<div class="col-lg-3 col-md-8">
+					<h3>Contact information</h3>
+					<p class="lead">Jimma University, Jimma, Ethiopia</p>
+					<p class="lead"><a href="#">+251 115-65-65</a></p>
+					<p><a href="#"> obcafe22@gmail.com</a></p>
+				</div>
+				<div class="col-lg-3 col-md-8">
+					<h3>Opening hours</h3>
+					<p><span class="text-color">Mon-Fri: </span> 8:Am - 5PM</p>
+					<p><span class="text-color">Sat-Sun: </span>Closed</p>
+				</div>
+				<div class="col-lg-3 col-md-8">
+					<h3>Developed By</h3>
+					<p class="lead">Abdellah Kamil</p>
+					<p class="lead">Harun Abdulkadir</p>
+					<p class="lead">Abdela Sabir</p>
+					<p class="lead">Fuad Ali</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="copyright">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<p class="company-name">All Rights Reserved. &copy; 2022 <a href="#">Oromia Bureaus' Cafeteria</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</footer>
+
+
+     <!-- SCRIPTS -->
+     <script src="{% static 'home/js/jquery.js' %}"></script>
+     <script src="{% static 'home/js/bootstrap.min.js' %}"></script>
+     <script src="{% static 'home/js/jquery.stellar.min.js' %}"></script>
+     <script src="{% static 'home/js/wow.min.js' %}"></script>
+     <script src="{% static 'home/js/owl.carousel.min.js' %}"></script>
+     <script src="{% static 'home/js/jquery.magnific-popup.min.js' %}"></script>
+     <script src="{% static 'home/js/smoothscroll.js' %}"></script>
+     <script src="{% static 'home/js/custom.js' %}"></script>
+
+</body>
+</html>

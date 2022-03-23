@@ -63,7 +63,36 @@ def GeneratePdf(request):
          # rendering the template
         return HttpResponse(pdf, content_type='application/pdf')
 
+
+#Edit profile
+def profile(request):
+    if request.method == "POST":
+        fname = request.POST.get('fname','')
+        lname = request.POST.get('lname','')
+        email = request.POST.get('email','')
+        phone = request.POST.get('phone','')
+        address = request.POST.get('address', '')
+        gender = request.POST.get('gender','')
+        request.user.first_name = fname
+        request.user.last_name = lname
+        request.user.username = email
+        request.user.email = email
+
+        request.user.address = fname
+
+        request.user.save()
+        customer = Customer.objects.get(customer=request.user)
+        customer.address = address
+        customer.phone = phone
+        customer.gender = gender
+        customer.save()
         
+    if not request.user.is_staff:
+        customer = Customer.objects.get(customer=request.user)
+        context = {"gender":customer.gender,"phone":customer.phone,"address": customer.address,"fname":request.user.first_name,"lname":request.user.last_name,"email":request.user.username,}
+    return render(request, "home/profile.html", context)
+
+    
 #when the user clicks add to button this function add that item into cart
 @login_required(login_url='/accounts/login/')
 def addcart(request):
@@ -359,8 +388,9 @@ def reportmg(request):
                         if itm[0] not in ordic:
                             ordic[itm[0]] = 0
                         ordic[itm[0]] += int(itm[1])
-            mxv = sorted(ordic.items(),key=lambda x:x[1],reverse=True)[0]
-            most_sold = mxv[0] +": " + str(mxv[1])
+            if ordic != {}:
+                mxv = sorted(ordic.items(),key=lambda x:x[1],reverse=True)[0]
+                most_sold = mxv[0] +": " + str(mxv[1])
             overall["most_sold"] = most_sold
 
             #total today purchased in birr

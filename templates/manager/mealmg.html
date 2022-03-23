@@ -10,8 +10,8 @@
  
      <!-- Site Metas -->
     <title>Meal Management</title>  
-    <meta name="keywords" content="Cafeteria, Order">
-    <meta name="description" content="Cafeteria for Oromia Bureaus employees and customers">
+    <meta name="description" content="Oromia Bureaus' Cafeteria is a non-profit organization established by the Government Oromia to serve its customers.">
+    <meta name="keywords" content="Oromia, order, food, cafeteria, cafe">
     <meta name="author" content="JIT students">
 
     <!-- Site Icons -->
@@ -104,6 +104,9 @@
             <li class="nav-item"><a class="nav-link" href="{% url 'report' %}">Report</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
 					</ul>
+          <ul class="navbar-nav ml-5">
+            <li><a href="#"><i class="fa fa-user"></i> {{user.first_name}} {{user.last_name}}</a></li>
+          </ul>
 				</div>
 			</div>
 		</nav>
@@ -150,29 +153,8 @@
                 <form action="" method="post" enctype="multipart/form-data">
                   {% csrf_token %}
                   {{form.as_p}}
-                  {% comment %} <div class="input_field"> <span><i aria-hidden="true" class="fa fa-book"></i></span>
-                    <input type="text" name="name" placeholder="Name" required />
-                  </div>
-                  <div class="input_field"> <span><i aria-hidden="true" class="fa fa-money"></i></span>
-                    <input type="text" name="price" placeholder="Price" required />
-                  </div>
-                  <div class="input_field"> <span><i aria-hidden="true" class="fa fa-book"></i></span>
-                    <input type="text" name="desc" placeholder="Describtion" required />
-                  </div>
-                  <div class="input_field select_option">
-                    <select name="menu">
-                      {% for menu in menus %}
-                      <option value={{menu.name}}>{{menu.name}}</option>
-                      {% endfor %}
-                    </select>
-                    <div class="select_arrow"></div>
-                  </div>
-                  <div class="input_field">
-                    <input type="file" name="image" placeholder="image" required />
-                  </div> {% endcomment %}
-                  
-                  <input class="button" type="submit" value="Add" />
-                  <button type="button" class="button" style="width: 100% !important; background-color:red; color:white" onclick="closeForm()">Close</button>
+                  <input class="button" style="cursor: pointer;" type="submit" value="Add" />
+                  <button type="button" class="button" style="cursor: pointer; width: 100% !important; background-color:red; color:white" onclick="closeForm()">Close</button>
                 </form>
                 
               </div>

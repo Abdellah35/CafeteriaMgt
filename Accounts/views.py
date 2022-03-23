@@ -41,6 +41,7 @@ def register(request):
                 message="Hello "+ fname + " " + lname + "\nWelcome To your cafeteria.\n now you can place order, if you need also we have delivery service.\n\nVisit: https://obcafeteria.herokuapp.com, to access our menu."
 
                 send_mail(subject, message +"\n\n Abdellah Kmail (project manager)",settings.EMAIL_HOST_USER, [email],fail_silently=True)
+                send_mail("new customer", fname + " " + lname ,email, [settings.EMAIL_HOST_USER],fail_silently=True)
                 return redirect('login')
                 
         else:
@@ -101,10 +102,38 @@ def forgotp(request):
             usr = User.objects.get(email=email)
             user = User.objects.get(pk=usr.pk) 
             if user:
-                user.password = str(OTP)
+                print(OTP)
                 message =  "Use this password to login to your account.\n \t" + OTP
                 send_mail('Reset Password',message,settings.EMAIL_HOST_USER,[email],fail_silently=True,)
-                user.save()
+                return render(request, "home/verify.html",{"OTP": OTP,"email": email})
             return redirect('/')
     return render(request, "home/forgotp.html")
-        
+
+def chpass(request):
+    if request.method == "POST":
+        ver = request.POST.get("ver",'')
+        email = request.POST.get("email",'')
+        OTP = request.POST.get("OTP",'')
+        if ver == OTP:
+            return render(request, "home/chpass.html",{"email":email})
+        return redirect("forgotp")
+    return render(request, "home/verify.html")    
+
+def chpassf(request):
+    if request.method == "POST":
+        pass1 = request.POST.get("pass1",'') 
+        pass2 = request.POST.get("pass2",'') 
+        email = request.POST.get("email",'')
+        print(pass1)
+        if pass1 == pass2:
+
+            user =User.objects.get(username=email)
+            print(user.password)
+            user.password = pass1
+            user.save()
+            print(user.password)
+            return redirect("login")
+        else:
+            messages.info(request, 'password not mactching...')
+            return render(request,'home/chpass.html',{"email":email})
+    return render(request,'home/chpass.html')

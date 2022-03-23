@@ -10,9 +10,9 @@
  
      <!-- Site Metas -->
     <title>Waiter Page</title>  
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Oromia Bureaus' Cafeteria is a non-profit organization established by the Government Oromia to serve its customers.">
+    <meta name="keywords" content="Oromia, order, food, cafeteria, cafe">
+    <meta name="author" content="JIT students">
     <link rel="icon" type="image/png" href="{% static 'img/icons/logo.ico' %}"/>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">    
@@ -100,10 +100,12 @@
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
 						<li class="nav-item"><a class="nav-link" href="{% url 'menu' %}">Menu</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">{{user.first_name}}</a></li>
-            <li class="nav-item  active"><a class="nav-link" href="{% url 'myorder' %}">Orders</a></li>
-						<li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+						<li class="nav-item active"><a class="nav-link" href="{% url 'myorder' %}">Orders</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
 					</ul>
+          <ul class="navbar-nav ml-5">
+            <li><a href="{% url 'profile' %}"><i class="fa fa-user"></i> {{user.first_name}} {{user.last_name}}</a></li>
+          </ul>
 				</div>
 			</div>
 		</nav>

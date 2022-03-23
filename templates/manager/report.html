@@ -9,9 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
  
      <!-- Site Metas -->
-    <title>Purchased items</title>  
-    <meta name="keywords" content="Cafeteria, Order">
-    <meta name="description" content="Cafeteria for Oromia Bureaus employees and customers">
+    <title>Report Generator</title>  
+    <meta name="description" content="Oromia Bureaus' Cafeteria is a non-profit organization established by the Government Oromia to serve its customers.">
+    <meta name="keywords" content="Oromia, order, food, cafeteria, cafe">
     <meta name="author" content="JIT students">
 
     <!-- Site Icons -->
@@ -107,10 +107,13 @@
 						<li class="nav-item"><a class="nav-link" href="{% url 'meal' %}">Meal</a></li>
 						<li class="nav-item"><a class="nav-link " href="{% url 'employee' %}">Employee</a></li>
 						<li class="nav-item"><a class="nav-link " href="{% url 'purchases' %}">Purchases</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'customer' %}">Customer</a></li>
-                        <li class="nav-item active"><a class="nav-link" href="{% url 'report' %}">Report</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'customer' %}">Customer</a></li>
+            <li class="nav-item active"><a class="nav-link" href="{% url 'report' %}">Report</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
 					</ul>
+          <ul class="navbar-nav ml-5">
+            <li><a href="#"><i class="fa fa-user"></i> {{user.first_name}} {{user.last_name}}</a></li>
+          </ul>
 				</div>
 			</div>
 		</nav>

@@ -10,8 +10,8 @@
  
      <!-- Site Metas -->
     <title>Menu Management</title>  
-    <meta name="keywords" content="Cafeteria, Order">
-    <meta name="description" content="Cafeteria for Oromia Bureaus employees and customers">
+    <meta name="description" content="Oromia Bureaus' Cafeteria is a non-profit organization established by the Government Oromia to serve its customers.">
+    <meta name="keywords" content="Oromia, order, food, cafeteria, cafe">
     <meta name="author" content="JIT students">
 
     <!-- Site Icons -->
@@ -106,6 +106,9 @@
             <li class="nav-item"><a class="nav-link" href="{% url 'report' %}">Report</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
 					</ul>
+          <ul class="navbar-nav ml-5">
+            <li><a href="#"><i class="fa fa-user"></i> {{user.first_name}} {{user.last_name}}</a></li>
+          </ul>
 				</div>
 			</div>
 		</nav>
@@ -159,7 +162,7 @@
                       <input type="file" name="image" placeholder="image" required />
                     </div>
                     <input class="button" type="submit" value="Register" />
-                    <button type="button" class="button" style="width: 100% !important; background-color:red; color:white" onclick="closeForm()">Close</button>
+                    <button type="button" class="button" style="cursor: pointer; width: 100% !important; background-color:red; color:white" onclick="closeForm()">Close</button>
                   </form>
                   
                 </div>

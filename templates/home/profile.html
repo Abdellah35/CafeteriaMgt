@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="{% static 'css/profile.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel='stylesheet'>
+<head>
+<body>
+<div class="container-xl px-4 mt-4"> <!-- Account page navigation-->  
+    <hr class="mt-0 mb-4"> 
+    <div class="row"> 
+    <div class="col-xl-8"> <!-- Account details card--> 
+        <div class="card mb-4"> 
+            <div class="card-header">Account Details</div> 
+            <div class="card-body"> 
+                <form action="" method="post">  
+                    {% csrf_token %}
+                    <!-- Form Row--> 
+                    <div class="row gx-3 mb-3"> 
+                        <!-- Form Group (first name)--> 
+                        <div class="col-md-6"> 
+                            <label class="small mb-1" for="inputFirstName">First name</label> 
+                            <input class="form-control" id="inputFirstName" type="text" name="fname" placeholder={{fname}} value={{fname}}> 
+                        </div> <!-- Form Group (last name)--> 
+                        <div class="col-md-6"> 
+                            <label class="small mb-1" for="inputLastName">Last name</label> 
+                            <input class="form-control" id="inputLastName" name="lname" type="text" placeholder={{lname}} value={{lname}}> 
+                        </div> 
+                    </div> <!-- Form Row --> 
+                        <div class="row gx-3 mb-3">  
+                            <!-- Form Group (location)--> 
+                            <div class="col-md-6"> 
+                                <label class="small mb-1" for="inputLocation">Location</label> 
+                                <input class="form-control" id="inputLocation" name="address" type="text" placeholder={{address}} value={{address}}> 
+                            </div> 
+                            <div class="col-md-6"> 
+                                <label class="small mb-1" for="inputGender">Gender</label> 
+                                <input class="form-control" id="inputGender" name="gender" type="text" placeholder={{gender}} value={{gender}}> 
+                            </div> 
+                        </div> 
+                        <!-- Form Group (email address)--> 
+                        <!-- Form Row--> 
+                        <div class="row gx-3 mb-3"> 
+                            <!-- Form Group (phone number)--> 
+                            <div class="col-md-6"> 
+                                <label class="small mb-1" for="inputEmailAddress">Email address</label> 
+                                <input class="form-control" id="inputEmailAddress" name="email" type="email" placeholder={{email}} value={{email}} > 
+                            </div> 
+                            <div class="col-md-6"> 
+                                <label class="small mb-1" for="inputPhone">Phone number</label> 
+                                <input class="form-control" id="inputPhone" name="phone" type="tel" placeholder={{phone}} value={{phone}}> 
+                            </div> 
+                        </div> 
+                        <!-- Save changes button--> 
+                        <button class="btn btn-primary" type="submit">Save changes</button> 
+                        <button class="btn btn-primary" type="button"><a href="{% url 'home' %}" style="color:white"> Back to Home</a></button>
+                    </form> 
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+</div>
+</body>
+</html>
+

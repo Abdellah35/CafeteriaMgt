@@ -260,7 +260,7 @@ http://www.templatemo.com/tm-515-eatery
   }
 
   .custom-navbar .nav li a {
-    font-size: 12px;
+    font-size: 17px;
     font-weight: bold;
     color: #ffffff;
     padding-right: 22px;
@@ -313,6 +313,7 @@ http://www.templatemo.com/tm-515-eatery
 
     .top-nav-collapse .navbar-brand {
       color: #454545;
+  
     }
 
     .top-nav-collapse .nav li a {

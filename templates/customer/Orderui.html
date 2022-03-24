@@ -107,26 +107,26 @@
                      <!-- MENU LINKS -->
                      <div class="collapse navbar-collapse">
                           <ul class="nav navbar-nav navbar-nav-first">
-                               <li style="color: black;"><a class="smoothScroll" style="font-size: 17px !important;" href="{% url 'home' %}">Home</a></li>
-                               <li style="color: black;"><a class="smoothScroll" style="font-size: 17px !important;" href="{% url 'menu' %}">Menu</a></li>
+                               <li style="color: black;"><a class="smoothScroll" style="font-size: 15px !important;" href="{% url 'home' %}">Home</a></li>
+                               <li style="color: black;"><a class="smoothScroll" style="font-size: 15px !important;" href="{% url 'menu' %}">Menu</a></li>
                                {% if user.is_authenticated %}
                                {% if not user.is_staff %}
-                               <li style="color: black;"><a class="smoothScroll" style="font-size: 17px !important;" href="{% url 'myorder' %}">MyOrder</a></li>
+                               <li style="color: black;"><a class="smoothScroll" style="font-size: 15px !important;" href="{% url 'myorder' %}">MyOrder</a></li>
                                {% endif %}
                                {% else %}
-                               <li style="color: black;"><a class="smoothScroll" style="font-size: 17px !important;" href="{% url 'login' %}">Login</a></li>
+                               <li style="color: black;"><a class="smoothScroll" style="font-size: 15px !important;" href="{% url 'login' %}">Login</a></li>
                                {% endif %}
-                               <li style="color: black;"><a class="smoothScroll" style="font-size: 17px !important;" href="#about">About</a></li>
-                               <li style="color: black;"><a class="smoothScroll" style="font-size: 17px !important;" href="#contact">Contact</a></li>
-                               <li style="color: black;"><a class="smoothScroll" style="font-size: 17px !important;" href="{% url 'comment' %}">Feedback</a></li>
+                               <li style="color: black;"><a class="smoothScroll" style="font-size: 15px !important;" href="#about">About</a></li>
+                               <li style="color: black;"><a class="smoothScroll" style="font-size: 15px !important;" href="#contact">Contact</a></li>
+                               <li style="color: black;"><a class="smoothScroll" style="font-size: 15px !important;" href="{% url 'comment' %}">Feedback</a></li>
                           </ul>
       
                           <ul class="nav navbar-nav navbar-right">
                                {% if not user.is_authenticated %}
-                               <a style="font-size: 17px !important;" href="{% url 'register' %}" class="section-btn">Register</a>
+                               <a style="font-size: 15px !important;" href="{% url 'register' %}" class="section-btn">Register</a>
                                {% else %}
-                               <li><a style="font-size: 17px !important; color: black !important;" href="{% url 'profile' %}"><i class="fa fa-user"></i> {{user.first_name}} {{user.last_name}}</a></li>
-                               <a style="font-size: 17px !important;" href="{% url 'logout' %}" class="section-btn">Logout</a>
+                               <li><a style="font-size: 15px !important; color: black !important;" href="{% url 'profile' %}"><i class="fa fa-user"></i> {{user.first_name}} {{user.last_name}}</a></li>
+                               <a style="font-size: 15px !important;" href="{% url 'logout' %}" class="section-btn">Logout</a>
                                {% endif %}
                           </ul>
                      </div>

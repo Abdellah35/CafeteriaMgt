@@ -75,10 +75,7 @@ def profile(request):
         gender = request.POST.get('gender','')
         request.user.first_name = fname
         request.user.last_name = lname
-        request.user.username = email
-        request.user.email = email
 
-        request.user.address = fname
 
         request.user.save()
         customer = Customer.objects.get(customer=request.user)
@@ -363,7 +360,6 @@ def reportmg(request):
         time = str(datetime.datetime.now()).split()[0]
         orders = 0
         most_sold = ''
-        total_purchase = 0
         total_sale = 0
         blocked_order = 0
         customer_orders = 0
@@ -392,11 +388,6 @@ def reportmg(request):
                 mxv = sorted(ordic.items(),key=lambda x:x[1],reverse=True)[0]
                 most_sold = mxv[0] +": " + str(mxv[1])
             overall["most_sold"] = most_sold
-
-            #total today purchased in birr
-            td_purch = Purchase.objects.filter(datet = time)
-            total_purchase = sum(list([float(item.total) for item in td_purch]))
-            overall["total_purchase"] = total_purchase
 
             #total sale of of today
             total_sale = sum(list([float(item.price) for item in orde]))
@@ -452,12 +443,6 @@ def reportmg(request):
             most_sold = mxv[0] +": " + str(mxv[1])
             overall["most_sold"] = most_sold
 
-            #total today purchased in birr
-            total_purchase = 0
-            for i in range(7):
-                td_purch = Purchase.objects.filter(datet=str(datetime.datetime.now()-datetime.timedelta(days=i)).split()[0])
-                total_purchase += sum(list([float(item.total) for item in td_purch]))
-            overall["total_purchase"] = total_purchase
 
             #total sale of of today
             overall["total_sale"] = total_sale
@@ -521,16 +506,6 @@ def reportmg(request):
             most_sold = mxv[0] +": " + str(mxv[1])
             overall["most_sold"] = most_sold
 
-            
-
-            #total today purchased in birr
-            #td_purch = Purchase.objects.filter(datet = time)
-            total_purchase = 0
-            for i in range(30):
-                td_purch = Purchase.objects.filter(datet=str(datetime.datetime.now()-datetime.timedelta(days=i)).split()[0])
-                total_purchase += sum(list([float(item.total) for item in td_purch]))
-            overall["total_purchase"] = total_purchase
-
             #total sale of of today
             overall["total_sale"] = total_sale
 
@@ -567,7 +542,7 @@ def reportmg(request):
         else:
             pass
         open('templates/reports.html', "w").write(render_to_string('manager/reportpdf.html',{'days': days, "orders":orders,"manager": manager ,
-            "most_sold":most_sold,"total_purchase":total_purchase,"total_sale":total_sale,"blocked_order":blocked_order, 
+            "most_sold":most_sold,"total_sale":total_sale,"blocked_order":blocked_order, 
             "customer_orders":customer_orders,"delivered":delivered,"new_customers":new_customers ,"date":time}))
 
         # Converting the HTML template into a PDF file
@@ -652,9 +627,6 @@ def employeemg(request):
 #Manager register employees here
 @login_required(login_url='/accounts/login/')
 @user_passes_test(Is_Manager)
-def purchases(request):
-    purchases = Purchase.objects.all()
-    return render(request,'manager/purchases.html',{'purchases': purchases})
 
 def emp_type_c(user):
     return (Employ.objects.filter(employe=user , emp_type="chef").exists())
@@ -741,27 +713,3 @@ def casher(request):
 
     orders = Order.objects.filter(is_picked = True,is_payed=False,is_blocked=False)
     return render(request, 'employee/casher.html',{'orders': orders})
-
-
-def emp_type_su(user):
-    return (Employ.objects.filter(employe=user , emp_type="supplier").exists())
-
-
-@login_required(login_url='/accounts/login/')
-@user_passes_test(emp_type_su)
-def supplier(request):
-   
-    if request.method == "POST":
-        name = request.POST.get('name','')
-        price = request.POST.get('price','')
-        unit = request.POST.get("unit",'')
-        amount = request.POST.get("amount",'')
-        desc = request.POST.get('desc','')
-        group = request.POST.get('group','')
-        total = int(price) * int(amount)
-        date = str(datetime.datetime.now()).split()[0]
-        purchase = Purchase.objects.create(datet=date,total=total,by=request.user.username, name=name,price=price, unit=unit, amount=amount, desc=desc, group=group)
-        purchase.save()
-
-    return render(request, "employee/supplier.html")
-

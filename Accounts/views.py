@@ -71,8 +71,7 @@ def login(request):
                         return redirect('waiter')
                     elif  emp.emp_type == "casher":
                         return redirect('casher')
-                    elif  emp.emp_type == "supplier":
-                        return redirect('supplier')
+            
                 except:
                     emp= None
                 

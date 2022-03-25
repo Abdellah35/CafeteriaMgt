@@ -16,17 +16,6 @@ class Meal(models.Model):
     img = models.ImageField(upload_to='pics')
     menu =models.ForeignKey(Menu, on_delete=models.CASCADE)
 
-class Purchase(models.Model):
-    name = models.CharField(max_length=50)
-    price = models.IntegerField()
-    unit = models.CharField(max_length=10)
-    amount = models.IntegerField()
-    desc = models.TextField(null=True)
-    group = models.CharField(max_length=50)
-    by = models.CharField(max_length=50)
-    date = models.DateTimeField(auto_now_add=True, null=True)
-    total = models.CharField(max_length=50)
-    datet = models.CharField(max_length=10)
 
     
 class Order(models.Model):

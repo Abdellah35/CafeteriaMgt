@@ -20,7 +20,6 @@ urlpatterns = [
     path('manager/verall', views.verall, name="verall"),
     path('manager/report', views.reportmg, name="report"),
     path('manager/employee', views.employeemg, name="employee"),
-    path('manager/purchases',views.purchases, name="purchases"),
     path('manager/customer',views.customer, name="customer"),
     path('manager/', views.ordermg, name="manager"),
     path('chef/', views.chef, name="chef"),
@@ -28,5 +27,4 @@ urlpatterns = [
     path('casher/', views.casher, name="casher"),
     path('home/myorder',views.myorder, name="myorder"),
     path('casher/genbill', views.GeneratePdf,name="genbill"),
-    path('supplier/',views.supplier, name="supplier"),
 ] 

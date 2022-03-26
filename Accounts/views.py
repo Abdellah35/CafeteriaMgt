@@ -61,11 +61,12 @@ def login(request):
         
         if user is not None:
             auth.login(request, user)
-            
+            print("into")
             if user.is_staff:
                 try:
                     emp = Employ.objects.get(employe=user)
                     if emp.emp_type == "chef":
+                        print("some1")
                         return redirect('chef')
                     elif  emp.emp_type == "waiter":
                         return redirect('waiter')

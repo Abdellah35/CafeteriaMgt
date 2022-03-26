@@ -28,6 +28,7 @@ class Order(models.Model):
     address = models.CharField(max_length=500, null=True)
     status = models.CharField(max_length=20, null=True)
     price = models.CharField(max_length=20, null=True)
+    receipt = models.ImageField(upload_to='receipts')
     delivery = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
     is_ready = models.BooleanField(default=False)

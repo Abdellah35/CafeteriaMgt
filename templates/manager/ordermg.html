@@ -133,7 +133,7 @@
         
         {% for order in orders %}
         <div class="itemsv">
-          <p class="itemn">{{order.item}}</p>
+          <p class="itemn">{{order.customer.first_name}} {{order.customer.last_name}} ({{order.item}})</p>
           <div class="lefbtn">
             <form action="" id="Form1" method="post">
               {% csrf_token %}
@@ -145,7 +145,43 @@
               <input type="hidden" form="Form2" name="id" value={{order.id}} />
               <input class="blo" form="Form2" type="submit" name="verify" value="Block" onclick="message({{order.item}}, "Blocked")"/>
             </form>
+			<button type="button" class="ver" data-toggle="modal" data-target="#exampleModal">
+				Detail
+			</button>
           </div>
+		  <!-- Button trigger modal -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLabel">Order Detail</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+		  <p>Ordered by: {{order.customer.first_name}} {{order.customer.last_name}}</p>
+		  <p>Items: {{order.item}} </p>
+		  <p>Total Price: {{order.price}} </p>
+		  <p>Receipt <img src={{order.receipt}}  style="max-width: 50px !important; max-height: 70px !important;"/></p>
+		</div>
+		<div class="modal-footer">
+			<form action="" id="Form1" method="post">
+				{% csrf_token %}
+				<input type="hidden" form="Form8" name='idd' value={{order.id}} />
+				<button class="btn btn-primary" form="Form8" type="submit" name="verify" value="Verify">Verify</button>
+			</form>
+			<form action="remorder" id="Form7" method="post">
+			{% csrf_token %}
+			<input type="hidden" form="Form2" name="id" value={{order.id}} />
+			<button type="submit" class="btn btn-secondary" data-dismiss="modal"  form="Form7" name="verify" value="Block">Block</button>
+			</form>
+		</div>
+	  </div>
+	</div>
+  </div>
         </div>
         {% endfor %}
     </div>

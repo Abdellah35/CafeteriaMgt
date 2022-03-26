@@ -157,7 +157,7 @@
                 <h5 class="Action"><input type="submit" class="ver" form="Form3" value="Remove all"/></h5>
             </form>
         </div>
-        <form id="Form1" action="{% url 'order' %}" method="post">
+        <form id="Form1" action="{% url 'order' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {% for cart in carts %}
             <div class="Cart-Items d-flex justify-content-between">
@@ -190,7 +190,12 @@
             </div>
             {% endfor %}
             <hr >
+            <div class="d-flex justify-content-between" style="width: 100% !important; margin-left: 30px;">
+                <span class="fw-bold text-1000"><b>Attach screenshot of recite for this order (more info) </b></span>
+                {{form.as_p}}
+            </div>
             <div class="checkout">
+                
                 <div class="d-flex justify-content-between"><span class="fw-bold text-1000"><b>Delivery service? </b></span><input form="Form1" type="checkbox" name="delivery" /></div>
                 <div class="total">
                     <div>

@@ -11,7 +11,7 @@ from django.core.mail import BadHeaderError, send_mail
 from django.conf import settings
 import datetime
 
-from .forms import MealForm
+from .forms import MealForm, OrderForm
 
 
 def GeneratePdf(request):
@@ -180,6 +180,11 @@ def order(request):
         waiter = Employ.objects.filter(emp_type = 'waiter')
         status = 'Pending'
         date = str(datetime.datetime.now()).split()[0]
+        form = OrderForm()
+
+        form = OrderForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
         order = Order(date=date,delivery=delivery,customer= request.user ,address=custom.address, chef = chef[0].employe.username,waiter=waiter[0].employe.username, item=item, status=status, price=price )
         custom.orders += 1
         custom.total_sale += price
@@ -209,8 +214,9 @@ def myorder(request):
     for cart in CP:
         itm += 1
         total += cart.price
+    form = OrderForm()
 
-    return render(request, 'customer/Orderui.html', {'itm':itm ,'carts':CP,'not_empty':not_empty,'has_order':has_order,'order': orders, 'total':total})
+    return render(request, 'customer/Orderui.html', {'form':form,'itm':itm ,'carts':CP,'not_empty':not_empty,'has_order':has_order,'order': orders, 'total':total})
 
 
 def feedback(request):
@@ -439,8 +445,9 @@ def reportmg(request):
                             if itm[0] not in ordic:
                                 ordic[itm[0]] = 0
                             ordic[itm[0]] += int(itm[1].strip(", "))
-            mxv = sorted(ordic.items(),key=lambda x:x[1],reverse=True)[0]
-            most_sold = mxv[0] +": " + str(mxv[1])
+            if ordic != {}:
+                mxv = sorted(ordic.items(),key=lambda x:x[1],reverse=True)[0]
+                most_sold = mxv[0] +": " + str(mxv[1])
             overall["most_sold"] = most_sold
 
 
@@ -502,8 +509,9 @@ def reportmg(request):
                             if itm[0] not in ordic:
                                 ordic[itm[0]] = 0
                             ordic[itm[0]] += int(itm[1].strip(", "))
-            mxv = sorted(ordic.items(),key=lambda x:x[1],reverse=True)[0]
-            most_sold = mxv[0] +": " + str(mxv[1])
+            if ordic != {}:
+                mxv = sorted(ordic.items(),key=lambda x:x[1],reverse=True)[0]
+                most_sold = mxv[0] +": " + str(mxv[1])
             overall["most_sold"] = most_sold
 
             #total sale of of today
@@ -629,6 +637,7 @@ def employeemg(request):
 @user_passes_test(Is_Manager)
 
 def emp_type_c(user):
+    print("**********")
     return (Employ.objects.filter(employe=user , emp_type="chef").exists())
 
 #all customers account displayed for the manager
@@ -643,8 +652,9 @@ def customer(request):
 
 #Chef page: chefs verify the order they finish preparing it 
 @login_required(login_url='/accounts/login/')
-@user_passes_test(emp_type_c)
+# @user_passes_test(emp_type_c)
 def chef(request):
+    print("**********2")
     if request.method == 'POST':
         idd = request.POST.get('idd','')
         order = Order.objects.get(pk= idd)
@@ -652,6 +662,7 @@ def chef(request):
         order.status = "Ready"
         order.save()
     orders = Order.objects.filter(is_verified=True, is_ready=False,is_blocked=False)
+    print("some",request.user)
     return render(request, 'employee/chef.html',{'orders': orders})
 
 

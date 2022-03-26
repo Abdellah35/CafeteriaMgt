@@ -123,7 +123,7 @@
         <form action="" id="Form1" method="post">
             {% csrf_token %}
             <input type="hidden" form="Form1" name='idd' value={{order.id}} />
-            <input class="ver" form="Form1" type="submit" name="verify" value="Verify" onclick="message({{order.item}})"/>
+            <input class="ver" form="Form1" type="submit" name="verify" value="Picked" onclick="message({{order.item}})"/>
         </form>
         </div>
         {% endfor %}
